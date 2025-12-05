@@ -1,7 +1,7 @@
 import { Text, View, Image } from "@react-pdf/renderer";
 
 interface ISignature {
-  url: string | null;
+  url?: string;
 }
 export const Signature = ({ url }: ISignature) => (
   <View

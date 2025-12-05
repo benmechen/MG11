@@ -25,7 +25,12 @@ function RouteComponent() {
         onNext={() =>
           navigate({ to: "/documents/new/statement", search: (prev) => prev })
         }
-        onBack={() => navigate({ to: "/documents/new/details" })}
+        onBack={() =>
+          navigate({
+            to: "/documents/new/details",
+            search: { template: undefined },
+          })
+        }
       />
       <FormSectionContainer>
         <div className="flex flex-col gap-4">

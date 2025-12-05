@@ -17,7 +17,7 @@ import {
   IcToastRegion,
   SlottedSVG,
 } from "@ukic/react";
-import { mdiDownload, mdiFloppy } from "@mdi/js";
+import { mdiDownload } from "@mdi/js";
 
 export const Route = createFileRoute("/documents/new/review")({
   component: RouteComponent,
@@ -33,11 +33,11 @@ function RouteComponent() {
   const occupation = watch("witness.occupation");
   const statement = watch("statement");
 
-  const sigCanvas = useRef<typeof SignatureCanvas>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const sigCanvas = useRef<SignatureCanvas>(null);
+  const dialogRef = useRef<HTMLIcDialogElement>(null);
   const [canvasWidth, setCanvasWidth] = useState<number>(0);
   const [showingSignaturePad, setShowSignaturePad] = useState<boolean>(false);
-  const [trimmedDataURL, setTrimmedDataURL] = useState(null);
+  const [trimmedDataURL, setTrimmedDataURL] = useState<string>();
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
   const toastEl = useRef<HTMLIcToastElement | null>(null);
 

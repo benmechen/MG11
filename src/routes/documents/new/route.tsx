@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, useSearch } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { useGetTemplate } from "../../../hooks/useGetTemplate";
 import { useEffect } from "react";
@@ -22,12 +22,13 @@ export interface INewDocumentFields {
 
 export const Route = createFileRoute("/documents/new")({
   component: RouteComponent,
+  validateSearch: (search) => ({
+    template: search.template ? Number(search.template) : undefined,
+  }),
 });
 
 function RouteComponent() {
-  const { template: templateId } = useSearch({
-    from: "/documents/new",
-  });
+  const { template: templateId } = Route.useSearch();
 
   const template = useGetTemplate(templateId);
 
@@ -45,7 +46,7 @@ function RouteComponent() {
     if (template?.statement) methods.setValue("statement", template.statement);
   }, [template]);
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: INewDocumentFields) => console.log(data);
 
   return (
     <FormProvider {...methods}>

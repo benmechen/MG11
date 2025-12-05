@@ -1,4 +1,4 @@
-import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
+import { Page, Text, View, Document } from "@react-pdf/renderer";
 import { Header } from "./header";
 import { renderAge } from "./utils";
 import { Signature } from "./signature";
@@ -12,7 +12,7 @@ interface IRenderedDocument {
   };
   metadata: {
     createdAt: Date;
-    signatureUrl: string | null;
+    signatureUrl?: string;
   };
   statement: string;
 }

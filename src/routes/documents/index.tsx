@@ -33,7 +33,12 @@ function RouteComponent() {
         <IcButton
           slot="actions"
           variant="primary"
-          onClick={() => navigate({ to: "/documents/new" })}
+          onClick={() =>
+            navigate({
+              to: "/documents/new",
+              search: { template: undefined },
+            })
+          }
         >
           Create document
           <SlottedSVG path={mdiPlus} slot="right-icon" />
