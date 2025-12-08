@@ -1,5 +1,5 @@
 {
-  "name": "mg11",
+  "name": "investigation-platform",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,7 @@
     "@mdi/js": "^7.4.47",
     "@react-pdf/renderer": "^4.1.6",
     "@tailwindcss/vite": "^4.0.0-beta.8",
-    "@tanstack/react-router": "^1.92.3",
+    "@tanstack/react-router": "^1.139.14",
     "@ukic/canary-react": "^2.0.0-canary.31",
     "@ukic/fonts": "^2.6.5",
     "@ukic/react": "^2.32.1",

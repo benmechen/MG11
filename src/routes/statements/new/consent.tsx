@@ -2,8 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   NewDocumentPageHeader,
   NewDocumentPageHeaderStep,
-} from "../../../components/documents/new/header";
-import { FormSectionContainer } from "../../../components/documents/new/form-section-container";
+} from "../../../components/statements/new/header";
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import {
   IcRadioGroup,
   IcRadioOption,
@@ -11,23 +11,23 @@ import {
   IcTypography,
 } from "@ukic/react";
 
-export const Route = createFileRoute("/documents/new/consent")({
+export const Route = createFileRoute("/statements/new/consent")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents/new/consent" });
+  const navigate = useNavigate({ from: "/statements/new/consent" });
 
   return (
     <div className="h-full flex flex-col">
       <NewDocumentPageHeader
         step={NewDocumentPageHeaderStep.WitnessConsent}
         onNext={() =>
-          navigate({ to: "/documents/new/statement", search: (prev) => prev })
+          navigate({ to: "/statements/new/statement", search: (prev) => prev })
         }
         onBack={() =>
           navigate({
-            to: "/documents/new/details",
+            to: "/statements/new/details",
             search: { template: undefined },
           })
         }

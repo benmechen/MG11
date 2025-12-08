@@ -2,18 +2,18 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   NewDocumentPageHeader,
   NewDocumentPageHeaderStep,
-} from "../../../components/documents/new/header";
-import { FormSectionContainer } from "../../../components/documents/new/form-section-container";
+} from "../../../components/statements/new/header";
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import { IcTextField } from "@ukic/react";
 import { useFormContext } from "react-hook-form";
 import { INewDocumentFields } from "./route";
 
-export const Route = createFileRoute("/documents/new/statement")({
+export const Route = createFileRoute("/statements/new/statement")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents/new/statement" });
+  const navigate = useNavigate({ from: "/statements/new/statement" });
   const { register } = useFormContext<INewDocumentFields>();
 
   return (
@@ -21,10 +21,10 @@ function RouteComponent() {
       <NewDocumentPageHeader
         step={NewDocumentPageHeaderStep.Statement}
         onNext={() =>
-          navigate({ to: "/documents/new/review", search: (prev) => prev })
+          navigate({ to: "/statements/new/review", search: (prev) => prev })
         }
         onBack={() =>
-          navigate({ to: "/documents/new/details", search: (prev) => prev })
+          navigate({ to: "/statements/new/details", search: (prev) => prev })
         }
       />
       <FormSectionContainer>

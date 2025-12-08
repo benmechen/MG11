@@ -2,23 +2,23 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   NewDocumentPageHeader,
   NewDocumentPageHeaderStep,
-} from "../../../components/documents/new/header";
+} from "../../../components/statements/new/header";
 import { TemplateGrid } from "../../../components/templates/template-grid";
-import { FormSectionContainer } from "../../../components/documents/new/form-section-container";
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 
-export const Route = createFileRoute("/documents/new/")({
+export const Route = createFileRoute("/statements/new/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents/new" });
+  const navigate = useNavigate({ from: "/statements/new" });
 
   return (
     <div className="h-full flex flex-col">
       <NewDocumentPageHeader
         step={NewDocumentPageHeaderStep.Templates}
         onNext={() =>
-          navigate({ to: "/documents/new/details", search: (prev) => prev })
+          navigate({ to: "/statements/new/details", search: (prev) => prev })
         }
       />
       <FormSectionContainer>

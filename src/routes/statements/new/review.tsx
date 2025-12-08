@@ -2,10 +2,10 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   NewDocumentPageHeader,
   NewDocumentPageHeaderStep,
-} from "../../../components/documents/new/header";
-import { FormSectionContainer } from "../../../components/documents/new/form-section-container";
+} from "../../../components/statements/new/header";
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { RenderedDocument } from "../../../components/documents/rendered-document";
+import { RenderedDocument } from "../../../components/statements/rendered-document";
 import { useFormContext } from "react-hook-form";
 import { INewDocumentFields } from "./route";
 import { useEffect, useRef, useState } from "react";
@@ -19,12 +19,12 @@ import {
 } from "@ukic/react";
 import { mdiDownload } from "@mdi/js";
 
-export const Route = createFileRoute("/documents/new/review")({
+export const Route = createFileRoute("/statements/new/review")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents/new/review" });
+  const navigate = useNavigate({ from: "/statements/new/review" });
   const { watch } = useFormContext<INewDocumentFields>();
 
   const forenames = watch("witness.forenames");
@@ -94,7 +94,7 @@ function RouteComponent() {
         step={NewDocumentPageHeaderStep.Complete}
         onNext={() => setShowSignaturePad(true)}
         onBack={() =>
-          navigate({ to: "/documents/new/statement", search: (prev) => prev })
+          navigate({ to: "/statements/new/statement", search: (prev) => prev })
         }
       />
       <FormSectionContainer>

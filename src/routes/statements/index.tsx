@@ -9,49 +9,49 @@ import {
   IcTextField,
   SlottedSVG,
 } from "@ukic/react";
-import { DocumentCard } from "../../components/documents/document-card";
+import { DocumentCard } from "../../components/statements/document-card";
 import { mdiPlus } from "@mdi/js";
 
-export const Route = createFileRoute("/documents/")({
+export const Route = createFileRoute("/statements/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents" });
+  const navigate = useNavigate({ from: "/statements" });
 
   return (
     <div>
       <IcPageHeader
-        heading="Documents"
-        subheading="View your created documents"
+        heading="Statements"
+        subheading="View your created statements"
         aligned="full-width"
       >
         <IcBreadcrumbGroup slot="breadcrumbs">
           <IcBreadcrumb pageTitle="Home" href="/" />
-          <IcBreadcrumb current pageTitle="Documents" href="/documents" />
+          <IcBreadcrumb current pageTitle="Statements" href="/statements" />
         </IcBreadcrumbGroup>
         <IcButton
           slot="actions"
           variant="primary"
           onClick={() =>
             navigate({
-              to: "/documents/new",
+              to: "/statements/new",
               search: { template: undefined },
             })
           }
         >
-          Create document
+          Create statements
           <SlottedSVG path={mdiPlus} slot="right-icon" />
         </IcButton>
         <IcTextField
           slot="input"
-          placeholder="Search for documents"
+          placeholder="Search for statements"
           label="Input"
           hideLabel
         />
         <IcNavigationItem
           slot="tabs"
-          label="All Documents"
+          label="All Statements"
           href="#all"
           selected
         />
@@ -60,7 +60,7 @@ function RouteComponent() {
       </IcPageHeader>
       <IcSectionContainer className="flex gap-4 p-4">
         <DocumentCard
-          name="Document 1"
+          name="Statements 1"
           created={new Date()}
           lastUpdate={new Date()}
           status="completed"

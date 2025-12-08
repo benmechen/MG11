@@ -39,18 +39,18 @@ export const NewDocumentPageHeader = ({
 
   return (
     <IcPageHeader
-      heading="Create Document"
-      subheading="Create a new document from a template"
+      heading="Create Statement"
+      subheading="Create a new statement from a template"
       aligned="full-width"
       size="small"
     >
       <IcBreadcrumbGroup slot="breadcrumbs">
         <IcBreadcrumb pageTitle="Home" href="/" />
-        <IcBreadcrumb pageTitle="Documents" href="/documents" />
+        <IcBreadcrumb pageTitle="Statements" href="/statements" />
         <IcBreadcrumb
           current
-          pageTitle="Create Document"
-          href="/documents/new"
+          pageTitle="Create Statement"
+          href="/statements/new"
         />
       </IcBreadcrumbGroup>
 

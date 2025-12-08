@@ -2,8 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   NewDocumentPageHeader,
   NewDocumentPageHeaderStep,
-} from "../../../components/documents/new/header";
-import { FormSectionContainer } from "../../../components/documents/new/form-section-container";
+} from "../../../components/statements/new/header";
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import {
   IcButton,
   IcRadioGroup,
@@ -19,12 +19,12 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { INewDocumentFields } from "./route";
 
-export const Route = createFileRoute("/documents/new/details")({
+export const Route = createFileRoute("/statements/new/details")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/documents/new/details" });
+  const navigate = useNavigate({ from: "/statements/new/details" });
   const { register } = useFormContext<INewDocumentFields>();
   const [showAlternativeContacts, setShowAlternativeContacts] = useState(false);
 
@@ -33,10 +33,10 @@ function RouteComponent() {
       <NewDocumentPageHeader
         step={NewDocumentPageHeaderStep.Details}
         onNext={() =>
-          navigate({ to: "/documents/new/statement", search: (prev) => prev })
+          navigate({ to: "/statements/new/statement", search: (prev) => prev })
         }
         onBack={() =>
-          navigate({ to: "/documents/new", search: { template: undefined } })
+          navigate({ to: "/statements/new", search: { template: undefined } })
         }
       />
       <FormSectionContainer>
