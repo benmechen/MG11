@@ -1,5 +1,7 @@
 import { mdiCalendar } from "@mdi/js";
-import { IcCard, SlottedSVG } from "@ukic/react";
+import { IcCardVertical, SlottedSVG } from "@ukic/react";
+import { useAppContext } from "../app-context";
+import { format } from "date-fns";
 
 interface IIncidentCard {
   cadNumber: number;
@@ -12,19 +14,24 @@ export const IncidentCard = ({
   date,
   location,
   onClick,
-}: IIncidentCard) => (
-  <IcCard
-    heading={`${cadNumber}/${date.replaceAll("-", "")}`}
-    message={location}
-    onClick={() => onClick?.(cadNumber, date)}
-    clickable
-  >
-    <SlottedSVG
-      slot="icon"
-      path={mdiCalendar}
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-    />
-  </IcCard>
-);
+}: IIncidentCard) => {
+  const { incidentService } = useAppContext();
+  const dateObject = incidentService.stringToDate(date);
+
+  return (
+    <IcCardVertical
+      heading={`${cadNumber}/${format(dateObject, "ddMMMyy").toUpperCase()}`}
+      message={location}
+      onClick={() => onClick?.(cadNumber, date)}
+      clickable
+    >
+      <SlottedSVG
+        slot="icon"
+        path={mdiCalendar}
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+      />
+    </IcCardVertical>
+  );
+};

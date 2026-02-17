@@ -3,9 +3,9 @@ import { AppDB } from "..";
 
 export default class Person extends Entity<AppDB> {
   id!: number;
-  firstName!: string;
-  lastName!: string;
-  dateOfBirth!: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
   phoneNumber?: string;
   emailAddress?: string;
   address?: {
@@ -14,5 +14,6 @@ export default class Person extends Entity<AppDB> {
     city?: string;
     postcode: string;
   };
+  ocupation?: string;
   incidentId?: number;
 }

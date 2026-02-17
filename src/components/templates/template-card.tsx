@@ -1,5 +1,5 @@
 import { mdiFileDocumentOutline } from "@mdi/js";
-import { IcCard, SlottedSVG } from "@ukic/react";
+import { IcCardVertical, SlottedSVG } from "@ukic/react";
 
 interface ITemplateCard {
   id: number;
@@ -13,7 +13,7 @@ export const TemplateCard = ({
   description,
   onClick,
 }: ITemplateCard) => (
-  <IcCard
+  <IcCardVertical
     heading={name}
     message={description}
     onClick={() => onClick?.(id)}
@@ -27,5 +27,5 @@ export const TemplateCard = ({
       width="24"
       height="24"
     />
-  </IcCard>
+  </IcCardVertical>
 );

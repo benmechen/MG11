@@ -1,6 +1,11 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
 @import "@ukic/fonts/dist/fonts.css";
 @import "@ukic/react/dist/core/core.css";
-@import "tailwindcss";
+/* @import "@ukic/react/dist/core/normalize.css"; */
 
 @theme {
   --color-ic-architectural-black: var(--ic-architectural-black);
@@ -18,4 +23,14 @@
   --color-ic-architectural-40: var(--ic-architectural-40);
   --color-ic-architectural-20: var(--ic-architectural-20);
   --color-ic-architectural-white: var(--ic-architectural-white);
+  --color-ic-action-default: var(--ic-action-default);
+  --color-button-default-background-hover: var(
+    --ic-button-secondary-background-hover-active
+  );
+  --color-ic-background-primary: var(--ic-color-background-primary);
+}
+
+html,
+body {
+  margin: 0;
 }

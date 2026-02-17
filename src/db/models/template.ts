@@ -5,7 +5,7 @@ import { HTMLInputTypeAttribute } from "react";
 export default class Template extends Entity<AppDB> {
   id!: number;
   name!: string;
-  description!: string;
+  description?: string;
   created!: number;
   fields!: {
     name: string;

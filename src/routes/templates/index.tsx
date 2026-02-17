@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   IcPageHeader,
   IcBreadcrumbGroup,
@@ -13,6 +13,8 @@ export const Route = createFileRoute("/templates/")({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate({ from: "/templates" });
+
   return (
     <div>
       <IcPageHeader
@@ -24,12 +26,22 @@ function RouteComponent() {
           <IcBreadcrumb pageTitle="Home" href="/" />
           <IcBreadcrumb current pageTitle="Templates" href="/templates" />
         </IcBreadcrumbGroup>
-        <IcButton slot="actions" variant="primary">
+        <IcButton
+          slot="actions"
+          variant="primary"
+          onClick={() => navigate({ to: "new" })}
+        >
           Create template
         </IcButton>
       </IcPageHeader>
       <IcSectionContainer className="py-4 px-6" aligned="full-width">
-        <TemplateGrid />
+        <TemplateGrid
+          onCardClick={(id) =>
+            navigate({
+              to: `${id}`,
+            })
+          }
+        />
       </IcSectionContainer>
     </div>
   );

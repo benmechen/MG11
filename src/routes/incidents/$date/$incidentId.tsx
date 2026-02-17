@@ -1,134 +1,185 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IncidentService } from "../../../services/incident/incident";
 import { db } from "../../../db";
 import {
-  IcDataEntity,
   IcBreadcrumb,
   IcBreadcrumbGroup,
   IcButton,
-  IcDataRow,
   IcPageHeader,
   IcTypography,
   SlottedSVG,
   IcSectionContainer,
+  IcToast,
+  IcToastRegion,
+  IcLoadingIndicator,
 } from "@ukic/react";
-import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import {
   mdiAccount,
+  mdiContentCopy,
   mdiExportVariant,
   mdiFileDocument,
   mdiPlus,
 } from "@mdi/js";
 import { PersonService } from "../../../services/person/person";
+import { PersonCard } from "../../../components/incidents/new/person-card";
+import { useRef, useState } from "react";
+import { NewPersonModal } from "../../../components/incidents/new/new-person-modal";
+import { useLiveQuery } from "dexie-react-hooks";
+import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
+import { DeleteButton } from "../../../components/delete-button";
 
-const incidentService = new IncidentService(db);
 const personService = new PersonService(db);
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
-  loader: async ({ params }) => {
-    const incident = await incidentService.findById(
+  loader: async ({ context, params }) => {
+    const incident = await context.incidentService.findByCad(
       Number(params.incidentId),
       params.date
     );
 
-    if (!incident) return;
-
-    const people = await personService.findByIncident(incident.id);
-    return { ...incident, people };
+    return incident;
   },
 });
 
 function RouteComponent() {
   const incident = Route.useLoaderData();
+  const navigate = Route.useNavigate();
+  const [showNewPerson, setShowNewPerson] = useState(false);
+  const [showDeleteIncident, setShowDeleteIncident] = useState(false);
+  const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
+  const toastEl = useRef<HTMLIcToastElement | null>(null);
+
+  const people = useLiveQuery(
+    () => incident && personService.findByIncident(incident.id)
+  );
+
+  const formattedCAD = incident
+    ? `${incident.cadNumber.toString().padStart(6, "0")}/${incident.date.replaceAll("-", "")}`
+    : "";
+
+  const showToast = () => {
+    if (toastRegionEl.current && toastEl.current) {
+      toastRegionEl.current.openToast = toastEl.current;
+    }
+  };
+
+  const copyCADToClipboard = async () => {
+    if (!incident) return;
+    try {
+      await navigator.clipboard.writeText(formattedCAD);
+      showToast();
+    } catch (err) {
+      console.error("Failed to copy CAD to clipboard:", err);
+    }
+  };
+
+  if (!incident) return <IcLoadingIndicator fullWidth />;
+
   return (
-    <div className="h-full bg-ic-architectural-40">
-      <IcPageHeader
-        heading={`CAD ${incident?.cadNumber}/${incident?.date.replaceAll("-", "")}`}
-        subheading={incident?.location ?? "Unknown location"}
-        aligned="full-width"
-      >
-        <IcBreadcrumbGroup slot="breadcrumbs">
-          <IcBreadcrumb pageTitle="Home" href="/" />
-          <IcBreadcrumb pageTitle="Incidents" href="/incidents" />
-          <IcBreadcrumb
-            current
-            pageTitle={`CAD ${incident?.cadNumber}/${incident?.date.replaceAll("-", "")}`}
-            href={`/incidents/${incident?.date}/${incident?.cadNumber}`}
-          />
-        </IcBreadcrumbGroup>
-        <IcButton slot="actions" variant="secondary">
-          Export
-          <SlottedSVG
-            slot="right-icon"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            path={mdiExportVariant}
-          />
-        </IcButton>
-        <IcButton slot="actions" variant="destructive">
-          Delete
-        </IcButton>
-      </IcPageHeader>
-      <IcSectionContainer aligned="center" className="w-full">
-        <IcTypography variant="h4" className="flex items-center gap-2">
-          <SlottedSVG
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            path={mdiAccount}
-          />
-          People
-        </IcTypography>
+    <>
+      <IcToastRegion ref={toastRegionEl}>
+        <IcToast
+          heading="Copied to clipboard"
+          variant="success"
+          dismissMode="automatic"
+          ref={toastEl}
+        />
+      </IcToastRegion>
+      <NewPersonModal
+        incidentId={incident?.id}
+        open={showNewPerson}
+        onClose={() => setShowNewPerson(false)}
+      />
+      <DeleteIncidentModal
+        id={incident.id}
+        formattedCAD={formattedCAD}
+        open={showDeleteIncident}
+        onClose={() => {
+          setShowDeleteIncident(false);
+          navigate({ to: "/incidents" });
+        }}
+      />
+      <div className="h-fit bg-ic-architectural-40 dark:bg-ic-architectural-700">
+        <IcPageHeader
+          heading={`CAD ${formattedCAD}`}
+          subheading={incident?.location ?? "Unknown location"}
+          aligned="full-width"
+        >
+          <IcButton
+            slot="heading-adornment"
+            variant="icon"
+            onClick={copyCADToClipboard}
+          >
+            <SlottedSVG viewBox="0 0 24 24" path={mdiContentCopy} />
+          </IcButton>
+          <IcBreadcrumbGroup slot="breadcrumbs">
+            <IcBreadcrumb pageTitle="Home" href="/" />
+            <IcBreadcrumb pageTitle="Incidents" href="/incidents" />
+            <IcBreadcrumb
+              current
+              pageTitle={`CAD ${incident?.cadNumber}/${incident?.date.replaceAll("-", "")}`}
+              href={`/incidents/${incident?.date}/${incident?.cadNumber}`}
+            />
+          </IcBreadcrumbGroup>
+          <IcButton slot="actions" variant="secondary">
+            Export
+            <SlottedSVG
+              slot="right-icon"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              path={mdiExportVariant}
+            />
+          </IcButton>
+          <DeleteButton onClick={() => setShowDeleteIncident(true)} />{" "}
+        </IcPageHeader>
+        <IcSectionContainer aligned="center">
+          <IcTypography variant="h4" className="flex items-center gap-2">
+            <SlottedSVG
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              path={mdiAccount}
+            />
+            People
+          </IcTypography>
 
-        {incident?.people?.map((person, index) => (
-          <div className="bg-ic-architectural-white rounded-lg p-4">
-            <IcDataEntity heading={`Person #${index + 1}`} size="small">
-              <IcDataRow
-                label="Name"
-                value={`${person.firstName} ${person.lastName}`}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {people?.map((person, index) => (
+              <PersonCard key={person.id} person={person} index={index} />
+            ))}
+            <div
+              className="min-h-96 h-full w-full rounded border-dashed text-ic-action-default border-ic-architectural-400 cursor-pointer flex flex-col items-center justify-center hover:border-ic-action-default hover:bg-button-default-background-hover transition-colors duration-100"
+              onClick={() => setShowNewPerson(true)}
+            >
+              <SlottedSVG
+                path={mdiPlus}
+                height="24"
+                width="24"
+                viewBox="0 0 24 24"
+                color="currentColor"
+                className="text-ic-action-default"
               />
-              <IcDataRow label="Date of birth" value={person.dateOfBirth} />
-              <IcDataRow label="Telephone" value={person.phoneNumber} />
-              <IcDataRow label="Email" value={person.emailAddress} />
-              <IcDataRow label="Address">
-                {person.address && (
-                  <IcTypography variant="body" slot="value">
-                    {person.address?.line1}
-                    <br />
-                    {person.address?.line2}
-                    <br />
-                    {person.address?.city}
-                    <br />
-                    {person.address?.postcode}
-                  </IcTypography>
-                )}
-              </IcDataRow>
-            </IcDataEntity>
+              New Person
+            </div>
           </div>
-        ))}
-
-        <IcButton variant="tertiary" className="mt-4">
-          New Person
-          <SlottedSVG path={mdiPlus} slot="icon" />
-        </IcButton>
-      </IcSectionContainer>
-      <FormSectionContainer>
-        <IcTypography variant="h4" className="flex items-center gap-2">
-          <SlottedSVG
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            path={mdiFileDocument}
-          />
-          Statements
-        </IcTypography>
-        <IcButton variant="tertiary" className="mt-4">
-          New Statement
-          <SlottedSVG path={mdiPlus} slot="icon" />
-        </IcButton>
-      </FormSectionContainer>
-    </div>
+        </IcSectionContainer>
+        <IcSectionContainer aligned="center">
+          <IcTypography variant="h4" className="flex items-center gap-2">
+            <SlottedSVG
+              height="24"
+              width="24"
+              viewBox="0 0 24 24"
+              path={mdiFileDocument}
+            />
+            Statements
+          </IcTypography>
+          <IcButton variant="tertiary" className="mt-4">
+            New Statement
+            <SlottedSVG path={mdiPlus} slot="icon" />
+          </IcButton>
+        </IcSectionContainer>
+      </div>
+    </>
   );
 }

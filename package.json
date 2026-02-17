@@ -12,11 +12,11 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@react-pdf/renderer": "^4.1.6",
-    "@tailwindcss/vite": "^4.0.0-beta.8",
+    "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-router": "^1.139.14",
-    "@ukic/canary-react": "^2.0.0-canary.31",
-    "@ukic/fonts": "^2.6.5",
-    "@ukic/react": "^2.32.1",
+    "@ukic/canary-react": "^3.0.0-canary.31",
+    "@ukic/fonts": "^3.2.5",
+    "@ukic/react": "^3.15.0",
     "date-fns": "^4.1.0",
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
@@ -24,7 +24,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-signature-canvas": "^1.0.7",
-    "tailwindcss": "^4.0.0-beta.8"
+    "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.92.3",

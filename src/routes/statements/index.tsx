@@ -11,6 +11,7 @@ import {
 } from "@ukic/react";
 import { DocumentCard } from "../../components/statements/document-card";
 import { mdiPlus } from "@mdi/js";
+import { useGetStatements } from "../../hooks/useGetStatements";
 
 export const Route = createFileRoute("/statements/")({
   component: RouteComponent,
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/statements/")({
 
 function RouteComponent() {
   const navigate = useNavigate({ from: "/statements" });
+  const statements = useGetStatements();
 
   return (
     <div>
@@ -36,11 +38,12 @@ function RouteComponent() {
           onClick={() =>
             navigate({
               to: "/statements/new",
-              search: { template: undefined },
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              search: (prev: any) => prev,
             })
           }
         >
-          Create statements
+          Create statement
           <SlottedSVG path={mdiPlus} slot="right-icon" />
         </IcButton>
         <IcTextField
@@ -58,13 +61,24 @@ function RouteComponent() {
         <IcNavigationItem slot="tabs" label="Completed" href="#completed" />
         <IcNavigationItem slot="tabs" label="Draft" href="#draft" />
       </IcPageHeader>
-      <IcSectionContainer className="flex gap-4 p-4">
-        <DocumentCard
-          name="Statements 1"
-          created={new Date()}
-          lastUpdate={new Date()}
-          status="completed"
-        />
+      <IcSectionContainer className="flex flex-wrap gap-4 p-4">
+        {statements?.map((statement) => (
+          <DocumentCard
+            key={statement.id}
+            name={`Statement ${String(statement.id).trim()}`}
+            created={new Date(statement.created)}
+            lastUpdate={new Date(statement.updated)}
+            status={statement.status}
+            onClick={() =>
+              navigate({
+                to: "/statements/$statementId/review",
+                params: {
+                  statementId: statement.id.toString(),
+                },
+              })
+            }
+          />
+        ))}
       </IcSectionContainer>
     </div>
   );

@@ -1,4 +1,4 @@
-import { IcCard, IcStatusTag, SlottedSVG } from "@ukic/react";
+import { IcCardVertical, IcStatusTag, SlottedSVG } from "@ukic/react";
 
 interface IDocumentCard {
   name: string;
@@ -6,9 +6,10 @@ interface IDocumentCard {
   created: Date;
   lastUpdate: Date;
   status: "draft" | "completed";
+  onClick: () => void;
 }
-export const DocumentCard = ({ name, status }: IDocumentCard) => (
-  <IcCard heading={name} clickable>
+export const DocumentCard = ({ name, status, onClick }: IDocumentCard) => (
+  <IcCardVertical heading={name} clickable onClick={onClick}>
     {status === "completed" ? (
       <IcStatusTag slot="adornment" label="Completed" status="success" />
     ) : (
@@ -29,5 +30,5 @@ export const DocumentCard = ({ name, status }: IDocumentCard) => (
       <polygon fill="#aa00aa" points="1210 900 971 687 725 900" />
       <polygon fill="#880088" points="943 900 1210 900 971 687" />
     </SlottedSVG>
-  </IcCard>
+  </IcCardVertical>
 );

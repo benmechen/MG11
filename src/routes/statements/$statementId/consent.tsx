@@ -11,24 +11,27 @@ import {
   IcTypography,
 } from "@ukic/react";
 
-export const Route = createFileRoute("/statements/new/consent")({
+export const Route = createFileRoute("/statements/$statementId/consent")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/statements/new/consent" });
+  const navigate = useNavigate({ from: "/statements/$statementId/consent" });
 
   return (
     <div className="h-full flex flex-col">
       <NewDocumentPageHeader
         step={NewDocumentPageHeaderStep.WitnessConsent}
         onNext={() =>
-          navigate({ to: "/statements/new/statement", search: (prev) => prev })
+          navigate({
+            to: "/statements/$statementId/statement",
+            search: (prev) => prev,
+          })
         }
         onBack={() =>
           navigate({
-            to: "/statements/new/details",
-            search: { template: undefined },
+            to: "/statements/$statementId/details",
+            search: (prev) => prev,
           })
         }
       />

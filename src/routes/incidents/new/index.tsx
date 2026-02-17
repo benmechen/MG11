@@ -72,8 +72,11 @@ function RouteComponent() {
           <SlottedSVG path={mdiCheck} slot="right-icon" />
         </IcButton>
       </IcPageHeader>
-      <div className="grow w-full p-4 bg-ic-architectural-40 flex flex-col gap-4 items-center">
-        <IcSectionContainer className="w-2/3 bg-ic-architectural-white rounded-lg p-4">
+      <div className="grow w-full p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex flex-col gap-4 items-center">
+        <IcSectionContainer
+          className="w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
+          aligned="center"
+        >
           <div className="flex flex-col gap-4">
             <IcTypography variant="h4" className="mb-2">
               Incident Details
@@ -106,11 +109,12 @@ function RouteComponent() {
         {fields.map((field, index) => (
           <IcSectionContainer
             key={field.id}
-            className="w-2/3 bg-ic-architectural-white rounded-lg p-4"
+            className="w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
+            aligned="center"
           >
             <NewPersonForm
               index={index}
-              path={`people.${index}`}
+              fieldPrefix={`people.${index}.`}
               register={register}
               onClose={() => remove(index)}
             />

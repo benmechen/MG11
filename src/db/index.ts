@@ -1,12 +1,12 @@
 import Dexie, { EntityTable } from "dexie";
-import Document from "./models/document";
+import Statement from "./models/statement";
 import Template from "./models/template";
 import { populate } from "./populate";
 import Incident from "./models/incident";
 import Person from "./models/person";
 
 export class AppDB extends Dexie {
-  documents!: EntityTable<Document, "id">;
+  statements!: EntityTable<Statement, "id">;
   templates!: EntityTable<Template, "id">;
   incidents!: EntityTable<Incident, "id">;
   people!: EntityTable<Person, "id">;
@@ -14,13 +14,13 @@ export class AppDB extends Dexie {
   constructor() {
     super("MG11sDB");
     this.version(1).stores({
-      documents: "++id, name, created",
+      statements: "++id, name, created, incidentId",
       templates: "++id, name, created",
-      incidents: "++id, cadNumber, date",
+      incidents: "++id, cadNumber, date, [cadNumber+date]",
       people:
         "++id, firstName, lastName, dateOfBirth, phoneNumber, emailAddess, incidentId",
     });
-    this.documents.mapToClass(Document);
+    this.statements.mapToClass(Statement);
     this.templates.mapToClass(Template);
     this.incidents.mapToClass(Incident);
     this.incidents.mapToClass(Person);

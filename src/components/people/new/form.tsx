@@ -6,31 +6,36 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 interface INewPersonFormProps<T extends FieldValues> {
   index: number;
   register: UseFormRegister<T>;
-  path: string;
-  onClose: () => void;
+  fieldPrefix?: string;
+  header?: boolean;
+  onClose?: () => void;
 }
 export const NewPersonForm = <T extends FieldValues>({
   index,
-  path,
+  fieldPrefix: path,
+  header = true,
   register,
   onClose,
 }: INewPersonFormProps<T>) => (
   <div className="flex flex-col gap-4">
-    <div className="mb-2 flex justify-between items-center">
-      <IcTypography variant="h4">Person #{index + 1}</IcTypography>
-      <IcButton variant="icon" onClick={onClose}>
-        <SlottedSVG viewBox="0 0 24 24" path={mdiClose} />
-      </IcButton>
-    </div>
-    <div className="flex gap-4">
+    {header && (
+      <div className="mb-2 flex justify-between items-center">
+        <IcTypography variant="h4">Person #{index + 1}</IcTypography>
+        <IcButton variant="icon" onClick={onClose}>
+          <SlottedSVG viewBox="0 0 24 24" path={mdiClose} />
+        </IcButton>
+      </div>
+    )}
+    <div className="flex flex-col md:flex-row gap-4">
       <IcTextField
         label="Forename"
         helperText="All first and middle names"
         placeholder="John"
         fullWidth
         required
+        autoCapitalize="on"
         // @ts-expect-error Generic register issue
-        {...register(`${path}.firstName`)}
+        {...register(`${path ?? ""}firstName`)}
       />
       <IcTextField
         label="Surname"
@@ -38,8 +43,9 @@ export const NewPersonForm = <T extends FieldValues>({
         placeholder="Doe"
         fullWidth
         required
+        autoCapitalize="on"
         // @ts-expect-error Generic register issue
-        {...register(`${path}.lastName`)}
+        {...register(`${path ?? ""}lastName`)}
       />
     </div>
     <IcDateInput
@@ -47,51 +53,56 @@ export const NewPersonForm = <T extends FieldValues>({
       required
       // @ts-expect-error Generic register issue
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      {...(register(`${path}.dateOfBirth`) as any)}
+      {...(register(`${path ?? ""}dateOfBirth`) as any)}
     />
-    <div className="flex gap-4">
+    <IcTypography variant="subtitle-large" className="mt-2">
+      Address Details
+    </IcTypography>
+    <div className="flex flex-col md:flex-row gap-4">
       <IcTextField
         label="Line 1"
         placeholder="House number, Street"
         fullWidth
         // @ts-expect-error Generic register issue
-        {...register(`${path}.address.line1`)}
+        {...register(`${path ?? ""}address.line1`)}
       />
       <IcTextField
         label="Line 2"
         placeholder="Apt, Suite, Unit, Building"
         fullWidth
         // @ts-expect-error Generic register issue
-        {...register(`${path}.address.line2`)}
+        {...register(`${path ?? ""}address.line2`)}
       />
     </div>
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       <IcTextField
         label="City"
         placeholder="London"
         fullWidth
         // @ts-expect-error Generic register issue
-        {...register(`${path}.address.citys`)}
+        {...register(`${path ?? ""}address.city`)}
       />
       <IcTextField
         label="Postcode"
         placeholder="SW1 123"
-        className="w-2/5"
+        fullWidth
+        autoCapitalize="characters"
+        // className="w-2/5"
         // @ts-expect-error Generic register issue
-        {...register(`${path}.address.postcode`)}
+        {...register(`${path ?? ""}address.postcode`)}
       />
     </div>
     <IcTypography variant="subtitle-large" className="mt-2">
       Contact Details
     </IcTypography>
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       <IcTextField
         label="Email Address"
         placeholder="example@email.com"
         type="email"
         fullWidth
         // @ts-expect-error Generic register issue
-        {...register(`${path}.emailAddress`)}
+        {...register(`${path ?? ""}emailAddress`)}
       />
       <IcTextField
         label="Mobile Number"
@@ -99,7 +110,7 @@ export const NewPersonForm = <T extends FieldValues>({
         placeholder="+44 7123 456789"
         fullWidth
         // @ts-expect-error Generic register issue
-        {...register(`${path}.phoneNumber`)}
+        {...register(`${path ?? ""}phoneNumber`)}
       />
     </div>
   </div>

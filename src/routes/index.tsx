@@ -10,7 +10,7 @@ import {
 import { createFileRoute } from "@tanstack/react-router";
 import {
   IcButton,
-  IcCard,
+  IcCardVertical,
   IcHero,
   IcSectionContainer,
   IcTypography,
@@ -59,10 +59,10 @@ function RouteComponent() {
       >
         <IcTypography variant="h4">Incidents</IcTypography>
         <div className="flex flex-row w-full gap-8">
-          <IcCard
+          <IcCardVertical
             heading="New Incident"
             message="Create a new incident folder"
-            href="/incident/new"
+            href="/incidents/new"
             clickable
             className="w-60"
           >
@@ -74,8 +74,8 @@ function RouteComponent() {
               fill="#000000"
               path={mdiCalendarPlus}
             />
-          </IcCard>
-          <IcCard
+          </IcCardVertical>
+          <IcCardVertical
             heading="Incidents"
             message="View your existing incidents"
             href="/incidents"
@@ -90,11 +90,11 @@ function RouteComponent() {
               fill="#000000"
               path={mdiCalendar}
             />
-          </IcCard>
+          </IcCardVertical>
         </div>
         <IcTypography variant="h4">People</IcTypography>
         <div className="flex flex-row w-full gap-8">
-          <IcCard
+          <IcCardVertical
             heading="New Person"
             message="Create a new person"
             href="/person/new"
@@ -109,8 +109,8 @@ function RouteComponent() {
               fill="#000000"
               path={mdiAccountPlus}
             />
-          </IcCard>
-          <IcCard
+          </IcCardVertical>
+          <IcCardVertical
             heading="People"
             message="View your existing people records"
             href="/people"
@@ -125,11 +125,11 @@ function RouteComponent() {
               fill="#000000"
               path={mdiAccount}
             />
-          </IcCard>
+          </IcCardVertical>
         </div>
         <IcTypography variant="h4">Statements</IcTypography>
         <div className="flex flex-row w-full gap-8">
-          <IcCard
+          <IcCardVertical
             heading="New Statement"
             message="Create a new statement using a template"
             href="/statements/new"
@@ -144,8 +144,8 @@ function RouteComponent() {
               fill="#000000"
               path={mdiPlus}
             />
-          </IcCard>
-          <IcCard
+          </IcCardVertical>
+          <IcCardVertical
             heading="Statements"
             message="View your existing statements"
             href="/statements"
@@ -160,8 +160,8 @@ function RouteComponent() {
               fill="#000000"
               path={mdiFolder}
             />
-          </IcCard>
-          <IcCard
+          </IcCardVertical>
+          <IcCardVertical
             heading="Templates"
             message="Manage your statement proformas"
             href="/templates"
@@ -176,7 +176,7 @@ function RouteComponent() {
               fill="#000000"
               path={mdiFileDocumentMultiple}
             />
-          </IcCard>
+          </IcCardVertical>
         </div>
       </IcSectionContainer>
     </div>

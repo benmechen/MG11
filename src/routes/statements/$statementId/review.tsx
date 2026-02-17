@@ -7,7 +7,6 @@ import { FormSectionContainer } from "../../../components/statements/new/form-se
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { RenderedDocument } from "../../../components/statements/rendered-document";
 import { useFormContext } from "react-hook-form";
-import { INewDocumentFields } from "./route";
 import { useEffect, useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import {
@@ -18,17 +17,22 @@ import {
   SlottedSVG,
 } from "@ukic/react";
 import { mdiDownload } from "@mdi/js";
+import { isValidId } from "../../../utils/isValidId";
+import { useAppContext } from "../../../components/app-context";
+import { INewDocumentFields } from "./route";
 
-export const Route = createFileRoute("/statements/new/review")({
+export const Route = createFileRoute("/statements/$statementId/review")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const navigate = useNavigate({ from: "/statements/new/review" });
-  const { watch } = useFormContext<INewDocumentFields>();
+  const { statementService } = useAppContext();
+  const navigate = useNavigate({ from: "/statements/$statementId/review" });
+  const { watch, getValues } = useFormContext<INewDocumentFields>();
+  const { statementId } = Route.useParams();
 
-  const forenames = watch("witness.forenames");
-  const surname = watch("witness.surname");
+  const forenames = watch("witness.firstName");
+  const surname = watch("witness.lastName");
   const dateOfBirth = watch("witness.dateOfBirth");
   const occupation = watch("witness.occupation");
   const statement = watch("statement");
@@ -48,10 +52,11 @@ function RouteComponent() {
       sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png")
     );
 
-  const handleDialogClose = () => {
+  const handleDialogClose = async () => {
     trim();
     setShowSignaturePad(false);
     showToast();
+    await saveStatement();
   };
 
   const showToast = () => {
@@ -72,13 +77,27 @@ function RouteComponent() {
     return () => window.removeEventListener("resize", updateCanvasWidth);
   }, []);
 
+  const saveStatement = async () => {
+    if (!isValidId(statementId)) return;
+
+    const data = getValues();
+
+    await statementService.update(Number(statementId), {
+      person: {
+        ...data.witness,
+      },
+      statement: data.statement,
+      signature: trimmedDataURL,
+    });
+  };
+
   const document = (
     <RenderedDocument
       witness={{
-        forenames,
-        surname,
-        dateOfBirth: new Date(dateOfBirth),
-        occupation,
+        forenames: forenames ?? "",
+        surname: surname ?? "",
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : new Date(),
+        occupation: occupation || "N/A",
       }}
       metadata={{
         createdAt: new Date(),
@@ -91,10 +110,13 @@ function RouteComponent() {
   return (
     <div className="h-full flex flex-col">
       <NewDocumentPageHeader
+        statementId={statementId}
         step={NewDocumentPageHeaderStep.Complete}
         onNext={() => setShowSignaturePad(true)}
         onBack={() =>
-          navigate({ to: "/statements/new/statement", search: (prev) => prev })
+          navigate({
+            to: "/statements/$statementId/statement",
+          })
         }
       />
       <FormSectionContainer>
