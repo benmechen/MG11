@@ -9,15 +9,20 @@ import { useAppContext } from "../../components/app-context";
 
 export const Route = createFileRoute("/statements/new")({
   component: RouteComponent,
+  validateSearch: (search) => ({
+    incidentId: search.incidentId ? Number(search.incidentId) : undefined,
+  }),
 });
 
 function RouteComponent() {
   const { statementService } = useAppContext();
   const navigate = useNavigate({ from: "/statements/new" });
+  const { incidentId } = Route.useSearch();
 
   const createNewStatement = async (templateId?: number) => {
     const statementId = await statementService.create({
-      templateId: templateId,
+      templateId,
+      incidentId,
       status: "draft",
     });
 

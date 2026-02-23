@@ -43,6 +43,15 @@ export class StatementService {
   }
 
   /**
+   * Find statements included in an incident
+   * @param incidentId [CAD Number, Date]
+   * @returns
+   */
+  async findByIncident(incidentId: number) {
+    return this.db.statements.where({ incidentId }).toArray();
+  }
+
+  /**
    * Create a new statement
    * @param data Statement details
    */
@@ -76,16 +85,24 @@ export class StatementService {
   ) {
     const statement = await this.getById(id);
 
-    let personId = statement.personId || updates.personId;
-    if (person) {
-      if (!personId) personId = await this.personService.create(person);
-      else await this.personService.update(personId, person);
-    }
-
     let incidentId = statement.incidentId || updates.incidentId;
     if (incident) {
       if (!incidentId) incidentId = await this.incidentService.create(incident);
       else await this.incidentService.update(incidentId, incident);
+    }
+
+    let personId = statement.personId || updates.personId;
+    if (person) {
+      if (!personId)
+        personId = await this.personService.create({
+          ...person,
+          incidentId,
+        });
+      else
+        await this.personService.update(personId, {
+          ...person,
+          incidentId,
+        });
     }
 
     return this.db.statements.update(id, {

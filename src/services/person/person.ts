@@ -26,7 +26,6 @@ export class PersonService {
    * @returns
    */
   async findByIncident(incidentId: number) {
-    console.log("Finding people for incident ID:", incidentId);
     return this.db.people.where({ incidentId }).toArray();
   }
 

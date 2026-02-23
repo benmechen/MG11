@@ -88,6 +88,7 @@ function RouteComponent() {
       },
       statement: data.statement,
       signature: trimmedDataURL,
+      status: "completed",
     });
   };
 

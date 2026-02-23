@@ -30,7 +30,9 @@ export const PersonCard = ({ index, person }: IPersonCardProps) => {
     defaultValues: {
       firstName: person.firstName,
       lastName: person.lastName,
-      dateOfBirth: personService.stringToDate(person.dateOfBirth),
+      dateOfBirth: person.dateOfBirth
+        ? personService.stringToDate(person.dateOfBirth)
+        : undefined,
       phoneNumber: person.phoneNumber,
       emailAddress: person.emailAddress,
       address: person.address,
@@ -49,7 +51,7 @@ export const PersonCard = ({ index, person }: IPersonCardProps) => {
       <DeletePersonModal
         open={showDeletePerson}
         id={person.id}
-        firstName={person.firstName}
+        firstName={person.firstName ?? "Unknown"}
         onClose={() => setShowDeletePerson(false)}
       />
       <div className="bg-ic-architectural-white dark:bg-ic-architectural-black rounded-lg p-4 relative">

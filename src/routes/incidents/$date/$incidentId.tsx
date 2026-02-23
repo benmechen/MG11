@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db } from "../../../db";
 import {
   IcBreadcrumb,
   IcBreadcrumbGroup,
@@ -19,15 +18,14 @@ import {
   mdiFileDocument,
   mdiPlus,
 } from "@mdi/js";
-import { PersonService } from "../../../services/person/person";
 import { PersonCard } from "../../../components/incidents/new/person-card";
 import { useRef, useState } from "react";
 import { NewPersonModal } from "../../../components/incidents/new/new-person-modal";
 import { useLiveQuery } from "dexie-react-hooks";
 import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../components/delete-button";
-
-const personService = new PersonService(db);
+import { useAppContext } from "../../../components/app-context";
+import { StatementCard } from "../../../components/incidents/new/statement-card";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
@@ -42,6 +40,7 @@ export const Route = createFileRoute("/incidents/$date/$incidentId")({
 });
 
 function RouteComponent() {
+  const { personService, statementService } = useAppContext();
   const incident = Route.useLoaderData();
   const navigate = Route.useNavigate();
   const [showNewPerson, setShowNewPerson] = useState(false);
@@ -51,6 +50,10 @@ function RouteComponent() {
 
   const people = useLiveQuery(
     () => incident && personService.findByIncident(incident.id)
+  );
+
+  const statements = useLiveQuery(
+    () => incident && statementService.findByIncident(incident.id)
   );
 
   const formattedCAD = incident
@@ -174,10 +177,37 @@ function RouteComponent() {
             />
             Statements
           </IcTypography>
-          <IcButton variant="tertiary" className="mt-4">
-            New Statement
-            <SlottedSVG path={mdiPlus} slot="icon" />
-          </IcButton>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {statements?.map((statement) => (
+              <StatementCard
+                key={statement.id}
+                id={statement.id}
+                personId={statement.personId}
+                created={new Date(statement.created)}
+                lastUpdate={new Date(statement.updated)}
+                status={statement.status}
+              />
+            ))}
+            <div
+              className="min-h-96 h-full w-full rounded border-dashed text-ic-action-default border-ic-architectural-400 cursor-pointer flex flex-col items-center justify-center hover:border-ic-action-default hover:bg-button-default-background-hover transition-colors duration-100"
+              onClick={() =>
+                navigate({
+                  to: "/statements/new",
+                  search: { incidentId: incident?.id },
+                })
+              }
+            >
+              <SlottedSVG
+                path={mdiPlus}
+                height="24"
+                width="24"
+                viewBox="0 0 24 24"
+                color="currentColor"
+                className="text-ic-action-default"
+              />
+              New Statement
+            </div>
+          </div>
         </IcSectionContainer>
       </div>
     </>
