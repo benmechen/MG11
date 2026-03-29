@@ -49,7 +49,7 @@ function RouteComponent() {
 
   const trim = () =>
     setTrimmedDataURL(
-      sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png")
+      sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png"),
     );
 
   const handleDialogClose = async () => {
@@ -171,6 +171,19 @@ function RouteComponent() {
           </PDFDownloadLink>
         </IcToast>
       </IcToastRegion>
+      <PDFDownloadLink
+        slot="action"
+        fileName={`MG11 ${forenames} ${surname} - ${new Date().toDateString()}`}
+        document={document}
+      >
+        <IcButton
+          className="fixed z-10 bottom-4 right-4 shadow-lg"
+          variant="primary"
+        >
+          Download
+          <SlottedSVG path={mdiDownload} slot="right-icon" />
+        </IcButton>
+      </PDFDownloadLink>
     </div>
   );
 }

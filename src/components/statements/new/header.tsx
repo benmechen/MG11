@@ -39,7 +39,7 @@ export const NewDocumentPageHeader = ({
 
   const getStepState = (
     currentStep: NewDocumentPageHeaderStep,
-    targetStep: NewDocumentPageHeaderStep
+    targetStep: NewDocumentPageHeaderStep,
   ) =>
     currentStep === targetStep
       ? "current"
