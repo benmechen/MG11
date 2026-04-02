@@ -27,7 +27,7 @@ export const StatementCard = ({
   status,
 }: IStatementCardProps) => {
   const { personService } = useAppContext();
-  const navigate = useNavigate({ from: "/incidents/$date/$incidentId" });
+  const navigate = useNavigate({ from: "/incidents/$date/$incidentId/overview" });
   const [person, setPerson] = useState<Person>();
   const [showDeleteStatement, setShowDeleteStatement] = useState(false);
 
