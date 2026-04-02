@@ -10,6 +10,24 @@ export const GenericForm = () => (
       <IcTextField
         label="General Actions"
         helperText="Provide a narrative of what happened, when, where, who was involved and why"
+        value="- CAD: 
+- Call sign: 
+- Attending Officers: 
+- Location: 
+- Offence: 
+- First Aid: 
+
+- Arresting Officer: 
+- Time of arrest: 
+- Relevant time: 
+
+- Provide a narrative of what happened, when, where, who was involved and why.
+- Take care to only record sensitive personal data on relevant person cards.
+- Ensure that all officers in attendance are recorded.
+- Establish details of all offences alleged.
+- What are the points to prove for the offence and are they complete?
+"
+        spellCheck
         autoCapitalize="on"
         fullWidth
         rows={10} 
