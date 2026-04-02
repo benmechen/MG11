@@ -28,7 +28,7 @@ import { DeleteButton } from "../../../components/delete-button";
 import { useAppContext } from "../../../components/app-context";
 import { StatementCard } from "../../../components/incidents/new/statement-card";
 
-export const Route = createFileRoute("/incidents/$date/$incidentId")({
+export const Route = createFileRoute("/incidents/$date/$incidentId/overview")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const incident = await context.incidentService.findByCad(
