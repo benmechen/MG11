@@ -107,6 +107,35 @@ export const GenericForm = () => (
         resize 
         /*{...register('generalActions')}*/
       />
+      <IcTextField
+        label="Solvability Assessment"
+        helperText="Follow Crime Assessment Principles"
+        value="- Based on my initial assessment of material evidence I request this report is screened in for further investigation.
+- Provide rationale why you consider the investigation complete, or which proportionate lines of enquiry justify further investigation.
+- Confirm that you have informed the victim of your decision."
+        spellCheck
+        autoCapitalize="on"
+        fullWidth
+        rows={10} 
+        resize 
+        /*{...register('generalActions')}*/
+      />
+      <IcTextField
+        label="THRIVE+"
+        value="- THREAT - Threat is a communicated or perceived intent to inflict harm or loss on another person.
+- HARM - Harm is to do or cause harm e.g. to injure, damage, hurt/physical or psychological
+- RISK - Risk is the likelihood of the event occurring
+- INVESTIGATION - Investigation is the act or process of examining crime, problem or situation and considering what action is required.
+- VULNERABILITY - Vulnerability is defined for the purpose of incident management as “a person is vulnerable if as a result of their situation or circumstances they are unable to take care or protect themselves or others from harm or exploitation.
+- ENGAGEMENT - Engagement is where organisations and individuals build positive relationships for the benefit of all parties.
+- PREVENTION and INTERVENTION - Prevention and intervention is identifying opportunities to prevent further incidents occurring or worsening of threat, risk and harm and allocating the most appropriate resources (Police or Partnership) to intervene before further, more serious police intervention is required."
+        spellCheck
+        autoCapitalize="on"
+        fullWidth
+        rows={10} 
+        resize 
+        /*{...register('generalActions')}*/
+      />
 
 
   </div>
