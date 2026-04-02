@@ -19,6 +19,7 @@ import {
 } from "@mdi/js";
 import { useRef, useState } from "react";
 import { NewPersonModal } from "../../../components/incidents/new/new-person-modal";
+import { GenericForm } from "../../../components/incidents/dets/generic-form";
 /*import { useLiveQuery } from "dexie-react-hooks";*/
 import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../components/delete-button";
@@ -45,6 +46,8 @@ function RouteComponent() {
   const [showDeleteIncident, setShowDeleteIncident] = useState(false);
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
   const toastEl = useRef<HTMLIcToastElement | null>(null);
+
+  const [detsType, setDetsType] = useState<"generic" | "domestic" | "vulnerable">()
 
   const options = [
     { label: "Generic Investigation", value: "generic" },
@@ -155,8 +158,10 @@ function RouteComponent() {
                 placeholder="Select dets template..." 
                 label="Dets Template"
                 options={options}
-                onIcChange={(event) => console.log(event.detail.value)}
+                onIcChange={(event) => setDetsType(event.detail.value as "generic" | "domestic" | "vulnerable")}
               />
+
+              {detsType === "generic" && (<GenericForm />)}
             </div>
           </FormSectionContainer>
         </IcSectionContainer>
