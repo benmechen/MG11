@@ -71,6 +71,17 @@ function RouteComponent() {
           Save
           <SlottedSVG path={mdiCheck} slot="right-icon" />
         </IcButton>
+        <IcNavigationItem 
+          slot="tabs" 
+          label="Overview" 
+          href="#" 
+          selected 
+        />
+        <IcNavigationItem 
+          slot="tabs" 
+          label="Dets" 
+          href="#" 
+        />
       </IcPageHeader>
       <div className="grow w-full p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex flex-col gap-4 items-center">
         <IcSectionContainer
