@@ -14,7 +14,6 @@ import {
   IcSelect,
 } from "@ukic/react";
 import {
-  mdiAccount,
   mdiContentCopy,
   mdiExportVariant,
 } from "@mdi/js";
