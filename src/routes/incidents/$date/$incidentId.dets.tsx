@@ -16,17 +16,13 @@ import {
   mdiAccount,
   mdiContentCopy,
   mdiExportVariant,
-  mdiFileDocument,
-  mdiPlus,
 } from "@mdi/js";
-import { PersonCard } from "../../../components/incidents/new/person-card";
 import { useRef, useState } from "react";
 import { NewPersonModal } from "../../../components/incidents/new/new-person-modal";
 import { useLiveQuery } from "dexie-react-hooks";
 import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../components/delete-button";
 import { useAppContext } from "../../../components/app-context";
-import { StatementCard } from "../../../components/incidents/new/statement-card";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
@@ -49,13 +45,9 @@ function RouteComponent() {
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
   const toastEl = useRef<HTMLIcToastElement | null>(null);
 
-  const people = useLiveQuery(
+  /*const people = useLiveQuery(
     () => incident && personService.findByIncident(incident.id)
-  );
-
-  const statements = useLiveQuery(
-    () => incident && statementService.findByIncident(incident.id)
-  );
+  );*/
 
   const formattedCAD = incident
     ? `${incident.cadNumber.toString().padStart(6, "0")}/${incident.date.replaceAll("-", "")}`
