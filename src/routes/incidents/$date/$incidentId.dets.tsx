@@ -102,7 +102,7 @@ function RouteComponent() {
           navigate({ to: "/incidents" });
         }}
       />
-      <div className="h-fit bg-ic-architectural-40 dark:bg-ic-architectural-700">
+      <div className="h-full bg-ic-architectural-40 dark:bg-ic-architectural-700">
         <IcPageHeader
           heading={`CAD ${formattedCAD}`}
           subheading={incident?.location ?? "Unknown location"}
