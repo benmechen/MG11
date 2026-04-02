@@ -25,7 +25,8 @@ import { Route as StatementsStatementIdStatementImport } from './routes/statemen
 import { Route as StatementsStatementIdReviewImport } from './routes/statements/$statementId/review'
 import { Route as StatementsStatementIdDetailsImport } from './routes/statements/$statementId/details'
 import { Route as StatementsStatementIdConsentImport } from './routes/statements/$statementId/consent'
-import { Route as IncidentsDateIncidentIdImport } from './routes/incidents/$date/$incidentId'
+import { Route as IncidentsDateIncidentIdImport } from './routes/incidents/$date/$incidentId.overview'
+import { Route as IncidentsDateIncidentIdDetsImport } from './routes/incidents/$date/$incidentId.dets'
 
 // Create/Update Routes
 
@@ -125,6 +126,13 @@ const IncidentsDateIncidentIdRoute = IncidentsDateIncidentIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IncidentsDateIncidentIdDetsRoute = IncidentsDateIncidentIdDetsImport.update({
+  id: '/incidents/$date/$incidentId/dets',
+  path: '/incidents/$date/$incidentId/dets',
+  getParentRoute: () => rootRoute,
+} as any)
+
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -203,7 +211,7 @@ declare module '@tanstack/react-router' {
       id: '/incidents/$date/$incidentId/dets'
       path: '/incidents/$date/$incidentId/dets'
       fullPath: '/incidents/$date/$incidentId/dets'
-      preLoaderRoute: typeof IncidentsDateIncidentIdImport
+      preLoaderRoute: typeof IncidentsDateIncidentIdDetsRoute
       parentRoute: typeof rootRoute
     }
     '/statements/$statementId/consent': {
@@ -288,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/statements': typeof StatementsIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdRoute
+  '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/statements/$statementId/consent': typeof StatementsStatementIdConsentRoute
   '/statements/$statementId/details': typeof StatementsStatementIdDetailsRoute
   '/statements/$statementId/review': typeof StatementsStatementIdReviewRoute
@@ -305,6 +314,7 @@ export interface FileRoutesByTo {
   '/statements': typeof StatementsIndexRoute
   '/templates': typeof TemplatesIndexRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdRoute
+  '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/statements/$statementId/consent': typeof StatementsStatementIdConsentRoute
   '/statements/$statementId/details': typeof StatementsStatementIdDetailsRoute
   '/statements/$statementId/review': typeof StatementsStatementIdReviewRoute
@@ -324,6 +334,7 @@ export interface FileRoutesById {
   '/statements/': typeof StatementsIndexRoute
   '/templates/': typeof TemplatesIndexRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdRoute
+  '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/statements/$statementId/consent': typeof StatementsStatementIdConsentRoute
   '/statements/$statementId/details': typeof StatementsStatementIdDetailsRoute
   '/statements/$statementId/review': typeof StatementsStatementIdReviewRoute
@@ -344,6 +355,7 @@ export interface FileRouteTypes {
     | '/statements'
     | '/templates'
     | '/incidents/$date/$incidentId/overview'
+    | '/incidents/$date/$incidentId/dets'
     | '/statements/$statementId/consent'
     | '/statements/$statementId/details'
     | '/statements/$statementId/review'
@@ -360,6 +372,7 @@ export interface FileRouteTypes {
     | '/statements'
     | '/templates'
     | '/incidents/$date/$incidentId/overview'
+    | '/incidents/$date/$incidentId/dets'
     | '/statements/$statementId/consent'
     | '/statements/$statementId/details'
     | '/statements/$statementId/review'
@@ -377,6 +390,7 @@ export interface FileRouteTypes {
     | '/statements/'
     | '/templates/'
     | '/incidents/$date/$incidentId/overview'
+    | '/incidents/$date/$incidentId/dets'
     | '/statements/$statementId/consent'
     | '/statements/$statementId/details'
     | '/statements/$statementId/review'
@@ -396,6 +410,7 @@ export interface RootRouteChildren {
   StatementsIndexRoute: typeof StatementsIndexRoute
   TemplatesIndexRoute: typeof TemplatesIndexRoute
   IncidentsDateIncidentIdRoute: typeof IncidentsDateIncidentIdRoute
+  IncidentsDateIncidentIdDetsRoute: typeof IncidentsDateIncidentIdDetsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -409,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatementsIndexRoute: StatementsIndexRoute,
   TemplatesIndexRoute: TemplatesIndexRoute,
   IncidentsDateIncidentIdRoute: IncidentsDateIncidentIdRoute,
+  IncidentsDateIncidentIdDetsRoute: IncidentsDateIncidentIdDetsRoute,
 }
 
 export const routeTree = rootRoute
