@@ -73,7 +73,7 @@ export class IncidentService {
 
   async update(
     id: number,
-    { people, ...data }: Partial<IncidentDto> & { people?: PersonDto[] }
+    { ...data }: Partial<IncidentDto> & { people?: PersonDto[] },
   ) {
     const incident = await this.db.incidents.get(id);
     if (!incident) throw new Error("Incident not found");

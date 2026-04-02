@@ -26,8 +26,8 @@ function RouteComponent() {
   return (
     <div>
       <IcHero
-        heading="Investigation Platform"
-        subheading="Create statements, manage your documents, and create templates for common statement types"
+        heading="Response Hub"
+        subheading="Take statements, manage people, and build investigations"
       >
         <IcButton
           variant="primary"

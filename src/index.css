@@ -28,6 +28,9 @@
     --ic-button-secondary-background-hover-active
   );
   --color-ic-background-primary: var(--ic-color-background-primary);
+  --color-ic-text-field-typing-cursor: var(--ic-text-field-typing-cursor);
+  --color-ic-text-field-text: var(--ic-text-field-text);
+  --color-ic-color-text-secondary: var(--ic-color-text-secondary);
 }
 
 html,

@@ -6,4 +6,5 @@ export default class Incident extends Entity<AppDB> {
   cadNumber!: number;
   date!: string;
   location?: string;
+  dets?: { [key: string]: string };
 }
