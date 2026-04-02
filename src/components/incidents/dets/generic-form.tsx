@@ -1,4 +1,4 @@
-import { IcTypography, IcTextField } from "@ukic/react";
+import { IcTextField } from "@ukic/react";
 /*import { FieldValues, UseFormRegister } from "react-hook-form";*/
 
 /*interface IGenericFormProps<T extends FieldValues> {
@@ -17,10 +17,5 @@ export const GenericForm = () => (
         // @ts-expect-error Generic register issue
         /*{...register('generalActions')}*/
       />
-    </div>
-
-    <IcTypography variant="subtitle-large" className="mt-2">
-      Address Details
-    </IcTypography>
   </div>
 );
