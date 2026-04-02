@@ -131,7 +131,7 @@ function RouteComponent() {
           <IcNavigationItem 
             slot="tabs" 
             label="Overview" 
-            href={`/incidents/${incident?.date}/${incident?.cadNumber}`} 
+            href={`/incidents/${incident?.date}/${incident?.cadNumber}/overview`} 
           />
           <IcNavigationItem 
             slot="tabs" 
