@@ -12,6 +12,7 @@ import {
   IcLoadingIndicator,
   IcNavigationItem,
   IcSelect,
+  IcAlert,
 } from "@ukic/react";
 import {
   mdiContentCopy,
@@ -154,6 +155,11 @@ function RouteComponent() {
           <FormSectionContainer>
             <div className="flex flex-col gap-4">
               <IcTypography variant="h2">Investigation Dets</IcTypography>
+              <IcAlert
+                variant="info"
+                heading="Did you know?"
+                message="This form is automatically saved to your browser as you type"
+              />              
               <IcSelect
                 placeholder="Select dets template..." 
                 label="Dets Template"
