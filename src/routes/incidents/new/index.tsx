@@ -106,7 +106,6 @@ function RouteComponent() {
             <IcTextField
               label="Location"
               helperText="House No., road name, post code"
-              required
               placeholder="123 Upper Street, N1"
               {...register("location")}
             />
