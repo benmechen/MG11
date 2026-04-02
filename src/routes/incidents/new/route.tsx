@@ -8,6 +8,7 @@ import { PersonDto } from "../../../services/person/personDto";
 export interface INewIncidentFields {
   cadNumber: number;
   date: Date;
+  location?: string;
   people?: PersonDto[];
 }
 
@@ -32,6 +33,7 @@ function RouteComponent() {
     await incidentService.create({
       cadNumber: data.cadNumber,
       date: data.date,
+      location: data.location,
       people: data.people,
     });
     navigate({
