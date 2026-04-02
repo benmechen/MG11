@@ -56,6 +56,7 @@ export class IncidentService {
       incident = await this.db.incidents.add({
         date: this.dateToString(data.date),
         cadNumber: Number(data.cadNumber),
+        location: data.location,
       });
 
     if (!people) return incident;
@@ -97,6 +98,7 @@ export class IncidentService {
       ...data,
       date: data.date ? this.dateToString(data.date) : incident.date,
       cadNumber: data.cadNumber ?? incident.cadNumber,
+      location: data.location ?? incident.location,
     });
   }
 
