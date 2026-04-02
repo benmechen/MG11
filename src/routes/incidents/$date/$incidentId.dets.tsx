@@ -19,10 +19,10 @@ import {
 } from "@mdi/js";
 import { useRef, useState } from "react";
 import { NewPersonModal } from "../../../components/incidents/new/new-person-modal";
-import { useLiveQuery } from "dexie-react-hooks";
+/*import { useLiveQuery } from "dexie-react-hooks";*/
 import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../components/delete-button";
-import { useAppContext } from "../../../components/app-context";
+/*import { useAppContext } from "../../../components/app-context";*/
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/incidents/$date/$incidentId")({
 });
 
 function RouteComponent() {
-  const { personService, statementService } = useAppContext();
+  /*const { personService, statementService } = useAppContext();*/
   const incident = Route.useLoaderData();
   const navigate = Route.useNavigate();
   const [showNewPerson, setShowNewPerson] = useState(false);
