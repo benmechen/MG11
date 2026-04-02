@@ -14,7 +14,6 @@ export const GenericForm = () => (
         fullWidth
         rows={10} 
         resize 
-        // @ts-expect-error Generic register issue
         /*{...register('generalActions')}*/
       />
   </div>
