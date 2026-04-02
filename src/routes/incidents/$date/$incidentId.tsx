@@ -139,13 +139,13 @@ function RouteComponent() {
           <IcNavigationItem 
             slot="tabs" 
             label="Overview" 
-            href="#" 
+            href={`/incidents/${incident?.date}/${incident?.cadNumber}`}
             selected 
           />
           <IcNavigationItem 
             slot="tabs" 
             label="Dets" 
-            href="#" 
+            href={`/incidents/${incident?.date}/${incident?.cadNumber}/dets`} 
           />
         </IcPageHeader>
         <IcSectionContainer aligned="center">
