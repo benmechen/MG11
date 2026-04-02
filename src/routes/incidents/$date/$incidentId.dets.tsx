@@ -157,7 +157,6 @@ function RouteComponent() {
               <IcTypography variant="h2">Investigation Dets</IcTypography>
               <IcAlert
                 variant="info"
-                heading="Did you know?"
                 message="This form is automatically saved to your browser as you type. It can be exported to an email using the 'Export' button at the top of the page."
                 dismissible
               />              
