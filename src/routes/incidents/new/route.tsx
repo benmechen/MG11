@@ -37,7 +37,7 @@ function RouteComponent() {
       people: data.people,
     });
     navigate({
-      to: "/incidents/$date/$incidentId",
+      to: "/incidents/$date/$incidentId/overview",
       params: {
         date: incidentService.dateToString(data.date),
         incidentId: String(data.cadNumber),
