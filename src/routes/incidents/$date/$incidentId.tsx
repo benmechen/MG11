@@ -10,6 +10,7 @@ import {
   IcToast,
   IcToastRegion,
   IcLoadingIndicator,
+  IcNavigationItem,
 } from "@ukic/react";
 import {
   mdiAccount,
@@ -134,7 +135,18 @@ function RouteComponent() {
               path={mdiExportVariant}
             />
           </IcButton>
-          <DeleteButton onClick={() => setShowDeleteIncident(true)} />{" "}
+          <DeleteButton onClick={() => setShowDeleteIncident(true)} />
+          <IcNavigationItem 
+            slot="tabs" 
+            label="Overview" 
+            href="#" 
+            selected 
+          />
+          <IcNavigationItem 
+            slot="tabs" 
+            label="Dets" 
+            href="#" 
+          />
         </IcPageHeader>
         <IcSectionContainer aligned="center">
           <IcTypography variant="h4" className="flex items-center gap-2">
