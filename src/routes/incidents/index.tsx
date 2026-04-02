@@ -38,7 +38,7 @@ function RouteComponent() {
         <IncidentGrid
           onCardClick={(cadNumber, date) =>
             navigate({
-              to: "/incidents/$date/$incidentId",
+              to: "/incidents/$date/$incidentId/overview",
               params: {
                 incidentId: String(cadNumber),
                 date,
