@@ -11,6 +11,7 @@ import {
   IcToastRegion,
   IcLoadingIndicator,
   IcNavigationItem,
+  IcSelect,
 } from "@ukic/react";
 import {
   mdiAccount,
@@ -23,6 +24,7 @@ import { NewPersonModal } from "../../../components/incidents/new/new-person-mod
 import { DeleteIncidentModal } from "../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../components/delete-button";
 /*import { useAppContext } from "../../../components/app-context";*/
+import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId/dets")({
   component: RouteComponent,
@@ -44,6 +46,12 @@ function RouteComponent() {
   const [showDeleteIncident, setShowDeleteIncident] = useState(false);
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
   const toastEl = useRef<HTMLIcToastElement | null>(null);
+
+  const options = [
+    { label: "Generic Investigation", value: "generic" },
+    { label: "Domestic Investigation", value: "domestic" },
+    { label: "Vulnerable Person Investigation", value: "vulnerable" },
+  ];
 
   /*const people = useLiveQuery(
     () => incident && personService.findByIncident(incident.id)
@@ -141,15 +149,17 @@ function RouteComponent() {
           />
         </IcPageHeader>
         <IcSectionContainer aligned="center">
-          <IcTypography variant="h4" className="flex items-center gap-2">
-            <SlottedSVG
-              height="24"
-              viewBox="0 0 24 24"
-              width="24"
-              path={mdiAccount}
-            />
-            Generic Investigation
-          </IcTypography>
+          <FormSectionContainer>
+            <div className="flex flex-col gap-4">
+              <IcTypography variant="h2">Investigation Dets</IcTypography>
+              <IcSelect
+                placeholder="Select dets template..." 
+                label="Dets Template"
+                options={options}
+                onIcChange={(event) => console.log(event.detail.value)}
+              />
+            </div>
+          </FormSectionContainer>
         </IcSectionContainer>
       </div>
     </>
