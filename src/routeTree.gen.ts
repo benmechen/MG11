@@ -199,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IncidentsDateIncidentIdImport
       parentRoute: typeof rootRoute
     }
+    '/incidents/$date/$incidentId/dets': {
+      id: '/incidents/$date/$incidentId/dets'
+      path: '/incidents/$date/$incidentId/dets'
+      fullPath: '/incidents/$date/$incidentId/dets'
+      preLoaderRoute: typeof IncidentsDateIncidentIdImport
+      parentRoute: typeof rootRoute
+    }
     '/statements/$statementId/consent': {
       id: '/statements/$statementId/consent'
       path: '/consent'
