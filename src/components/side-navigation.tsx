@@ -16,7 +16,7 @@ import {
 } from "@ukic/react";
 
 export const SideNavigation = () => (
-  <IcSideNavigation appTitle="IP" version="v0.0.1" status="Alpha">
+  <IcSideNavigation appTitle="Response Hub" version="v0.0.1" status="Alpha">
     <SlottedSVG slot="app-icon" viewBox="0 0 24 24" path={mdiPoliceBadge} />
     <IcNavigationItem slot="primary-navigation" href="/" label="Home">
       <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiHome} />

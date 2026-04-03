@@ -13,6 +13,8 @@ import { PersonService } from "./services/person/person";
 import { TemplateService } from "./services/template/template";
 import { StatementService } from "./services/statement/statement";
 
+if (typeof window !== "undefined") import("./pwa");
+
 // Create a new router instance
 const router = createRouter({
   routeTree,
@@ -47,6 +49,6 @@ if (!rootElement.innerHTML) {
       <AppProvider value={AppContextValue}>
         <RouterProvider router={router} context={AppContextValue} />
       </AppProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 }
