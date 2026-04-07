@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useRhfAutosave } from "react-hook-form-autosave";
 import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
-import { useAppContext } from "../../app-context";
 
 interface DomesticFormFields {
   generalActions?: string;
@@ -26,9 +25,7 @@ interface IDomesticFormProps {
   onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const DomesticForm = ({ id, cad, location, dets, onUpdate }: IDomesticFormProps) => {
-  const { incidentService } = useAppContext();
-
+export const DomesticForm = ({ cad, location, dets, onUpdate }: IDomesticFormProps) => {
   const form = useForm<DomesticFormFields>({
     defaultValues: {
       generalActions:
