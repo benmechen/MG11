@@ -41,7 +41,7 @@ function RouteComponent() {
   useEffect(() => {
     if (detsType && incident) {
       if (incident.dets) incident.dets.type = detsType;
-      
+
       incidentService.update(incident.id, {
         dets: {
           ...incident.dets,
@@ -52,7 +52,7 @@ function RouteComponent() {
   }, [incident, detsType]);
 
   useEffect(() => {
-    console.log("Incident:", incident)
+    console.log("Incident:", incident);
     if (incident?.dets) {
       console.log(incident.dets);
       setDetsType(incident.dets.type as "generic" | "domestic" | "vulnerable");
@@ -66,6 +66,15 @@ function RouteComponent() {
   const formattedCAD = incident
     ? `${incident.cadNumber.toString()}/${incident.date.replaceAll("-", "")}`
     : "";
+
+  const updateDets = async (data: { [key: string]: string }) => {
+    const updatedDets = Object.entries(data).reduce(
+      (acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }),
+      {},
+    );
+    console.log("Autosaving data:", updatedDets);
+    await incidentService.update(id, updatedDets as any);
+  };
 
   return (
     <FormSectionContainer>
@@ -99,6 +108,7 @@ function RouteComponent() {
             cad={formattedCAD}
             location={incident?.location}
             dets={incident?.dets}
+            onUpdate={updateDets}
           />
         )}
         {detsType === "vulnerable" && (
@@ -107,6 +117,7 @@ function RouteComponent() {
             cad={formattedCAD}
             location={incident?.location}
             dets={incident?.dets}
+            onUpdate={updateDets}
           />
         )}
         {detsType === "domestic" && (
@@ -115,6 +126,7 @@ function RouteComponent() {
             cad={formattedCAD}
             location={incident?.location}
             dets={incident?.dets}
+            onUpdate={updateDets}
           />
         )}
       </div>
