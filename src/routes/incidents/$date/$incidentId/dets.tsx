@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { GenericForm } from "../../../../components/incidents/dets/generic-form";
 import { VulnerableForm } from "../../../../components/incidents/dets/vulnerable-form";
+import { DomesticForm } from "../../../../components/incidents/dets/domestic-form";
 /*import { useLiveQuery } from "dexie-react-hooks";*/
 /*import { useAppContext } from "../../../../components/app-context";*/
 import { FormSectionContainer } from "../../../../components/statements/new/form-section-container";
@@ -101,6 +102,14 @@ function RouteComponent() {
         )}
         {detsType === "vulnerable" && (
           <VulnerableForm
+            id={incident?.id}
+            cad={formattedCAD}
+            location={incident?.location}
+            dets={incident?.dets}
+          />
+        )}
+        {detsType === "domestic" && (
+          <DomesticForm
             id={incident?.id}
             cad={formattedCAD}
             location={incident?.location}
