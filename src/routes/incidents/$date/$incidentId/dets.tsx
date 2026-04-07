@@ -52,7 +52,7 @@ function RouteComponent() {
   }, [incident, detsType]);
 
   useEffect(() => {
-    console.log(incident)
+    console.log("Incident:", incident)
     if (incident?.dets) {
       console.log(incident.dets);
       setDetsType(incident.dets.type as "generic" | "domestic" | "vulnerable");
