@@ -10,8 +10,6 @@ import { useEffect, useState } from "react";
 import { GenericForm } from "../../../../components/incidents/dets/generic-form";
 import { VulnerableForm } from "../../../../components/incidents/dets/vulnerable-form";
 import { DomesticForm } from "../../../../components/incidents/dets/domestic-form";
-/*import { useLiveQuery } from "dexie-react-hooks";*/
-/*import { useAppContext } from "../../../../components/app-context";*/
 import { FormSectionContainer } from "../../../../components/statements/new/form-section-container";
 import { useAppContext } from "../../../../components/app-context";
 
@@ -43,7 +41,8 @@ function RouteComponent() {
 
   useEffect(() => {
     if (detsType && incident) {
-      incident.dets.type = detsType;
+      if (incident.dets) incident.dets.type = detsType;
+      
       incidentService.update(incident.id, {
         dets: {
           ...incident.dets,
