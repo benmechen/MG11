@@ -8,9 +8,9 @@ export const Route = createRootRouteWithContext<AppContextType>()({
 
 function RootComponent() {
   return (
-    <main className="!flex max-h-screen h-screen w-full">
+    <main className="!flex max-h-screen h-screen w-screen max-w-screen">
       <SideNavigation />
-      <div className="w-full overflow-y-auto">
+      <div className="max-w-full w-full overflow-y-auto">
         <Outlet />
       </div>
     </main>

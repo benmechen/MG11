@@ -7,10 +7,8 @@ import {
   IcPageHeader,
   IcSectionContainer,
   IcTextField,
-  SlottedSVG,
 } from "@ukic/react";
 import { DocumentCard } from "../../components/statements/document-card";
-import { mdiPlus } from "@mdi/js";
 import { useGetStatements } from "../../hooks/useGetStatements";
 
 export const Route = createFileRoute("/statements/")({
@@ -44,7 +42,6 @@ function RouteComponent() {
           }
         >
           Create statement
-          <SlottedSVG path={mdiPlus} slot="right-icon" />
         </IcButton>
         <IcTextField
           slot="input"

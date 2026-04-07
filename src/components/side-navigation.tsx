@@ -1,12 +1,11 @@
 import {
-  mdiFolder,
   mdiFileDocumentPlus,
   mdiCalendarPlus,
-  mdiAccountPlus,
   mdiHome,
-  mdiAccount,
   mdiCalendar,
   mdiPoliceBadge,
+  mdiFolderEdit,
+  mdiFileDocumentMultiple,
 } from "@mdi/js";
 import {
   IcSideNavigation,
@@ -36,7 +35,7 @@ export const SideNavigation = () => (
     >
       <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiCalendar} />
     </IcNavigationItem>
-    <IcDivider slot="primary-navigation" />
+    {/* <IcDivider slot="primary-navigation" />
     <IcNavigationItem
       slot="primary-navigation"
       href="/people/new"
@@ -46,7 +45,7 @@ export const SideNavigation = () => (
     </IcNavigationItem>
     <IcNavigationItem slot="primary-navigation" href="/people" label="People">
       <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiAccount} />
-    </IcNavigationItem>
+    </IcNavigationItem> */}
     <IcDivider slot="primary-navigation" />
     <IcNavigationItem
       slot="primary-navigation"
@@ -60,14 +59,18 @@ export const SideNavigation = () => (
       href="/statements"
       label="Statements"
     >
-      <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiFolder} />
+      <SlottedSVG
+        slot="icon"
+        viewBox="0 0 24 24"
+        path={mdiFileDocumentMultiple}
+      />
     </IcNavigationItem>
     <IcNavigationItem
       slot="primary-navigation"
       href="/templates"
       label="Templates"
     >
-      <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiFolder} />
+      <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiFolderEdit} />
     </IcNavigationItem>
   </IcSideNavigation>
 );

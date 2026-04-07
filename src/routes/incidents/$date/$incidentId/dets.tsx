@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   IcTypography,
-  IcSectionContainer,
   IcLoadingIndicator,
   IcSelect,
   IcAlert,
@@ -66,42 +65,40 @@ function RouteComponent() {
     : "";
 
   return (
-    <IcSectionContainer aligned="center">
-      <FormSectionContainer>
-        <div className="flex flex-col gap-4">
-          <IcTypography variant="h2">Investigation Dets</IcTypography>
-          {showTipAlert && (
-            <IcAlert
-              variant="info"
-              message="This form is automatically saved to your browser as you type. It can be exported to an email using the 'Export' button at the top of the page."
-              dismissible
-              onIcDismiss={() =>
-                window.localStorage.setItem("hideExportTip", "true")
-              }
-            />
-          )}
-          <IcSelect
-            placeholder="Select dets template..."
-            label="Dets Template"
-            options={options}
-            value={detsType}
-            onIcChange={(event) =>
-              setDetsType(
-                event.detail.value as "generic" | "domestic" | "vulnerable",
-              )
+    <FormSectionContainer>
+      <div className="flex flex-col gap-4">
+        <IcTypography variant="h2">Investigation Dets</IcTypography>
+        {showTipAlert && (
+          <IcAlert
+            variant="info"
+            message="This form is automatically saved to your browser as you type. It can be exported to an email using the 'Export' button at the top of the page."
+            dismissible
+            onIcDismiss={() =>
+              window.localStorage.setItem("hideExportTip", "true")
             }
           />
+        )}
+        <IcSelect
+          placeholder="Select dets template..."
+          label="Dets Template"
+          options={options}
+          value={detsType}
+          onIcChange={(event) =>
+            setDetsType(
+              event.detail.value as "generic" | "domestic" | "vulnerable",
+            )
+          }
+        />
 
-          {detsType === "generic" && (
-            <GenericForm
-              id={incident?.id}
-              cad={formattedCAD}
-              location={incident?.location}
-              dets={incident?.dets}
-            />
-          )}
-        </div>
-      </FormSectionContainer>
-    </IcSectionContainer>
+        {detsType === "generic" && (
+          <GenericForm
+            id={incident?.id}
+            cad={formattedCAD}
+            location={incident?.location}
+            dets={incident?.dets}
+          />
+        )}
+      </div>
+    </FormSectionContainer>
   );
 }

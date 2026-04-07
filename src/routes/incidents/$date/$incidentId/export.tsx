@@ -33,7 +33,7 @@ function RouteComponent() {
   return (
     <div className="p-4">
       {
-        <IcButton onClick={() => router.history.back()} variant="primary">
+        <IcButton onClick={() => router.history.back()} variant="secondary">
           <SlottedSVG
             slot="left-icon"
             viewBox="0 0 24 24"

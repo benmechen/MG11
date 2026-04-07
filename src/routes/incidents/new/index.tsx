@@ -13,7 +13,7 @@ import {
   IcTypography,
   SlottedSVG,
 } from "@ukic/react";
-import { mdiArrowLeft, mdiCheck, mdiPlus } from "@mdi/js";
+import { mdiArrowLeft, mdiCalendarToday, mdiCheck, mdiPlus } from "@mdi/js";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { INewIncidentFields, NewIncidentContext } from "./route";
 import { IcDatePicker } from "@ukic/canary-react";
@@ -60,7 +60,7 @@ function RouteComponent() {
             onClick={() => router.history.back()}
           >
             Back
-            <SlottedSVG path={mdiArrowLeft} slot="icon" />
+            <SlottedSVG path={mdiArrowLeft} slot="left-icon" />
           </IcButton>
         ) : null}
         <IcButton
@@ -72,9 +72,9 @@ function RouteComponent() {
           <SlottedSVG path={mdiCheck} slot="right-icon" />
         </IcButton>
       </IcPageHeader>
-      <div className="grow w-full p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex flex-col gap-4 items-center">
+      <div className="grow p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex flex-col gap-4 items-center">
         <IcSectionContainer
-          className="w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
+          className="w-full md:w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
           aligned="center"
         >
           <div className="flex flex-col gap-4">
@@ -88,7 +88,7 @@ function RouteComponent() {
               placeholder="000000"
               {...register("cadNumber")}
             />
-            <div className="flex items-end gap-2">
+            <div className="flex items-end md:gap-2">
               {/* @ts-expect-error Incorrect typing between ICDS and react-hook-form */}
               <IcDatePicker
                 label="Date"
@@ -98,9 +98,18 @@ function RouteComponent() {
               />
               <IcButton
                 variant="tertiary"
+                className="hidden md:inline-flex"
                 onClick={() => setValue("date", new Date())}
               >
                 Today
+              </IcButton>
+              <IcButton
+                variant="icon"
+                aria-label="Today"
+                className="md:hidden"
+                onClick={() => setValue("date", new Date())}
+              >
+                <SlottedSVG path={mdiCalendarToday} slot="left-icon" />
               </IcButton>
             </div>
             <IcTextField
@@ -115,7 +124,7 @@ function RouteComponent() {
         {fields.map((field, index) => (
           <IcSectionContainer
             key={field.id}
-            className="w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
+            className="w-full md:w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
             aligned="center"
           >
             <NewPersonForm
@@ -127,10 +136,10 @@ function RouteComponent() {
           </IcSectionContainer>
         ))}
 
-        <div className="w-2/3">
-          <IcButton variant="tertiary" onClick={() => append({})}>
+        <div className="w-full md:w-2/3 mb-6">
+          <IcButton variant="secondary" onClick={() => append({})}>
             Add Person
-            <SlottedSVG path={mdiPlus} slot="icon" />
+            <SlottedSVG path={mdiPlus} slot="left-icon" />
           </IcButton>
         </div>
       </div>

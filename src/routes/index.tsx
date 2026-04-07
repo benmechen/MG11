@@ -1,10 +1,8 @@
 import {
-  mdiAccount,
-  mdiAccountPlus,
   mdiCalendar,
   mdiCalendarPlus,
   mdiFileDocumentMultiple,
-  mdiFolder,
+  mdiFolderEdit,
   mdiPlus,
 } from "@mdi/js";
 import { createFileRoute } from "@tanstack/react-router";
@@ -24,7 +22,7 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   const navigate = Route.useNavigate();
   return (
-    <div>
+    <>
       <IcHero
         heading="Response Hub"
         subheading="Take statements, manage people, and build investigations"
@@ -55,10 +53,10 @@ function RouteComponent() {
       <IcSectionContainer
         aligned="full-width"
         fullHeight
-        className="flex flex-col p-8 gap-8 w-full justify-center"
+        className="flex flex-col p-8 gap-8 justify-center"
       >
         <IcTypography variant="h4">Incidents</IcTypography>
-        <div className="flex flex-row w-full gap-8">
+        <div className="flex flex-row flex-wrap w-full gap-8">
           <IcCardVertical
             heading="New Incident"
             message="Create a new incident folder"
@@ -92,7 +90,7 @@ function RouteComponent() {
             />
           </IcCardVertical>
         </div>
-        <IcTypography variant="h4">People</IcTypography>
+        {/* <IcTypography variant="h4">People</IcTypography>
         <div className="flex flex-row w-full gap-8">
           <IcCardVertical
             heading="New Person"
@@ -126,9 +124,9 @@ function RouteComponent() {
               path={mdiAccount}
             />
           </IcCardVertical>
-        </div>
+        </div> */}
         <IcTypography variant="h4">Statements</IcTypography>
-        <div className="flex flex-row w-full gap-8">
+        <div className="flex flex-row flex-wrap w-full gap-8">
           <IcCardVertical
             heading="New Statement"
             message="Create a new statement using a template"
@@ -158,7 +156,7 @@ function RouteComponent() {
               width="24"
               height="24"
               fill="#000000"
-              path={mdiFolder}
+              path={mdiFileDocumentMultiple}
             />
           </IcCardVertical>
           <IcCardVertical
@@ -174,11 +172,11 @@ function RouteComponent() {
               width="24"
               height="24"
               fill="#000000"
-              path={mdiFileDocumentMultiple}
+              path={mdiFolderEdit}
             />
           </IcCardVertical>
         </div>
       </IcSectionContainer>
-    </div>
+    </>
   );
 }

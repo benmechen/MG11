@@ -35,7 +35,7 @@ export const IncidentGrid = ({ onCardClick }: IIncidentCard) => {
 
         return acc;
       }, {}),
-    [incidents]
+    [incidents],
   );
 
   if (!incidents || incidents.length === 0)
@@ -55,15 +55,15 @@ export const IncidentGrid = ({ onCardClick }: IIncidentCard) => {
               {new Date(0, month).toLocaleString("default", { month: "long" })}{" "}
               {year}
             </IcTypography>
-            <div className="flex gap-4 mt-4">
+            <div className="flex flex-wrap gap-4 mt-4">
               {incidents
                 .sort((a, b) =>
                   a.date != b.date
                     ? compareDesc(
                         incidentService.stringToDate(a.date),
-                        incidentService.stringToDate(b.date)
+                        incidentService.stringToDate(b.date),
                       )
-                    : b.cadNumber - a.cadNumber
+                    : b.cadNumber - a.cadNumber,
                 )
                 .map((incident) => (
                   <IncidentCard
