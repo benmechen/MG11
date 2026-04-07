@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useRhfAutosave } from "react-hook-form-autosave";
 import { Textbox } from "./textbox";
-import { useAppContext } from "../../app-context";
 
 interface GenericFormFields {
   generalActions?: string;
@@ -22,9 +21,7 @@ interface IGenericFormProps {
   onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const GenericForm = ({ id, cad, location, dets, onUpdate }: IGenericFormProps) => {
-  const { incidentService } = useAppContext();
-
+export const GenericForm = ({ cad, location, dets, onUpdate }: IGenericFormProps) => {
   const form = useForm<GenericFormFields>({
     defaultValues: {
       generalActions:
