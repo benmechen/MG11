@@ -26,7 +26,7 @@ interface IDomesticFormProps {
   onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const DomesticForm = ({ id, cad, location, dets }: IDomesticFormProps) => {
+export const DomesticForm = ({ id, cad, location, dets, onUpdate }: IDomesticFormProps) => {
   const { incidentService } = useAppContext();
 
   const form = useForm<DomesticFormFields>({
@@ -110,10 +110,7 @@ export const DomesticForm = ({ id, cad, location, dets }: IDomesticFormProps) =>
   useRhfAutosave({
     form,
     transport: async (data) => {
-      console.log("Autosaving data:", data);
-      await incidentService.update(id, {
-        dets: { ...dets, ...(data as { [key: string]: string }) },
-      });
+      await onUpdate(data as ({ [key: string]: string }));
       return {
         ok: true,
       };
