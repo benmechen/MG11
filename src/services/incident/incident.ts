@@ -75,6 +75,7 @@ export class IncidentService {
     id: number,
     { ...data }: Partial<IncidentDto> & { people?: PersonDto[] },
   ) {
+    console.log("Updating incident", data)
     const incident = await this.db.incidents.get(id);
     if (!incident) throw new Error("Incident not found");
 
