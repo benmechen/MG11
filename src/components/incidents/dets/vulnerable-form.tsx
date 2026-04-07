@@ -115,7 +115,7 @@ Environment: `,
         helperText="Describe in full detail what areas of concerns you are highlighting to the local authority"
         spellCheck
         autoCapitalize="on"
-        rows={6}
+        rows={7}
         {...register("safeguardingDescription")}
       />
     </div>
