@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useRhfAutosave } from "react-hook-form-autosave";
+import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
 import { useAppContext } from "../../app-context";
 
