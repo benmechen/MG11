@@ -6,12 +6,9 @@ import { useAppContext } from "../../app-context";
 
 interface VulnerableFormFields {
   generalActions?: string;
-  scenes?: string;
-  forensic?: string;
-  victimsWitnesses?: string;
-  suspects?: string;
-  otherActions?: string;
-  solvability?: string;
+  safeguardingDetails?: string;
+  safeguardingActions?: string;
+  safeguardingDescription?: string;
   thrive?: string;
 }
 
