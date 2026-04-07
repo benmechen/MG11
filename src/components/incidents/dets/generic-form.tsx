@@ -19,6 +19,7 @@ interface IGenericFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
+  onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
 export const GenericForm = ({ id, cad, location, dets }: IGenericFormProps) => {
