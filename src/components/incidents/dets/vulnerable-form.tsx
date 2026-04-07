@@ -67,7 +67,7 @@ Environment: `,
       const updatedDets = Object.entries(data).reduce((acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }), {})
       console.log("Autosaving data:", updatedDets);
       await incidentService.update(id, {
-        dets: updatedDets as any,
+        updatedDets as any,
       });
       return {
         ok: true,
