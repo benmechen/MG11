@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { useRhfAutosave } from "react-hook-form-autosave";
 import { Textbox } from "./textbox";
+import { StatusIndicator } from "./status-indicator";
+import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 
-interface GenericFormFields {
+export interface GenericFormFields {
   generalActions?: string;
   scenes?: string;
   forensic?: string;
@@ -18,10 +19,15 @@ interface IGenericFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>
+  onUpdate: (data: { [key: string]: string }) => Promise<void>;
 }
 
-export const GenericForm = ({ cad, location, dets, onUpdate }: IGenericFormProps) => {
+export const GenericForm = ({
+  cad,
+  location,
+  dets,
+  onUpdate,
+}: IGenericFormProps) => {
   const form = useForm<GenericFormFields>({
     defaultValues: {
       generalActions:
@@ -95,20 +101,18 @@ export const GenericForm = ({ cad, location, dets, onUpdate }: IGenericFormProps
     },
   });
 
-  useRhfAutosave({
+  const { isSaving, hasPendingChanges } = useRhfAutosaveConfig(onUpdate, {
     form,
-    transport: async (data) => {
-      await onUpdate(data as ({ [key: string]: string }));
-      return {
-        ok: true,
-      };
-    },
   });
 
   const { register } = form;
 
   return (
     <div className="flex flex-col gap-4">
+      <StatusIndicator
+        isSaving={isSaving}
+        hasPendingChanges={hasPendingChanges}
+      />
       <Textbox
         label="General Actions"
         helperText="Provide a narrative of what happened, when, where, who was involved and why"

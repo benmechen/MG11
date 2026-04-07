@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useRhfAutosave } from "react-hook-form-autosave";
 import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
+import { StatusIndicator } from "./status-indicator";
+import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 
 interface DomesticFormFields {
   generalActions?: string;
@@ -22,10 +23,15 @@ interface IDomesticFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>
+  onUpdate: (data: { [key: string]: string }) => Promise<void>;
 }
 
-export const DomesticForm = ({ cad, location, dets, onUpdate }: IDomesticFormProps) => {
+export const DomesticForm = ({
+  cad,
+  location,
+  dets,
+  onUpdate,
+}: IDomesticFormProps) => {
   const form = useForm<DomesticFormFields>({
     defaultValues: {
       generalActions:
@@ -104,20 +110,18 @@ export const DomesticForm = ({ cad, location, dets, onUpdate }: IDomesticFormPro
     },
   });
 
-  useRhfAutosave({
+  const { isSaving, hasPendingChanges } = useRhfAutosaveConfig(onUpdate, {
     form,
-    transport: async (data) => {
-      await onUpdate(data as ({ [key: string]: string }));
-      return {
-        ok: true,
-      };
-    },
   });
 
   const { register } = form;
 
   return (
     <div className="flex flex-col gap-4">
+      <StatusIndicator
+        isSaving={isSaving}
+        hasPendingChanges={hasPendingChanges}
+      />
       <Textbox
         label="General Actions"
         helperText="Provide a narrative of what happened, when, where, who was involved and why"
@@ -179,7 +183,9 @@ export const DomesticForm = ({ cad, location, dets, onUpdate }: IDomesticFormPro
         rows={15}
         {...register("thrive")}
       />
-      <IcTypography variant="h3" className="my-2">Safeguarding Triage</IcTypography>
+      <IcTypography variant="h3" className="my-2">
+        Safeguarding Triage
+      </IcTypography>
       <Textbox
         label="Concerns"
         helperText="Describe in full detail what are the specific concerns for the individual"

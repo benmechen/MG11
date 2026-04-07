@@ -40,7 +40,8 @@ function RouteComponent() {
 
   useEffect(() => {
     if (detsType && incident) {
-      if (incident.dets) incident.dets.type = detsType;
+      if (incident.dets && incident.dets.type !== detsType)
+        incident.dets.type = detsType;
 
       incidentService.update(incident.id, {
         dets: {
@@ -52,11 +53,8 @@ function RouteComponent() {
   }, [incident, detsType]);
 
   useEffect(() => {
-    console.log("Incident:", incident);
-    if (incident?.dets) {
-      console.log(incident.dets);
+    if (incident?.dets)
       setDetsType(incident.dets.type as "generic" | "domestic" | "vulnerable");
-    }
   }, [incident]);
 
   const showTipAlert = window.localStorage.getItem("hideExportTip") === null;
@@ -67,14 +65,18 @@ function RouteComponent() {
     ? `${incident.cadNumber.toString()}/${incident.date.replaceAll("-", "")}`
     : "";
 
+  const delay = (durationMs: number) => {
+    return new Promise((resolve) => setTimeout(resolve, durationMs));
+  };
+
   const updateDets = async (data: { [key: string]: string }) => {
     if (!incident) return;
     const updatedDets = Object.entries(data).reduce(
       (acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }),
       {},
     );
-    console.log("Autosaving data:", updatedDets);
-    await incidentService.update(incident.id, updatedDets as any);
+    await incidentService.update(incident.id, updatedDets);
+    await delay(250);
   };
 
   return (

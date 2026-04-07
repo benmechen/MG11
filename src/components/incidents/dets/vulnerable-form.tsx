@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useRhfAutosave } from "react-hook-form-autosave";
 import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
+import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
+import { StatusIndicator } from "./status-indicator";
 
 interface VulnerableFormFields {
   generalActions?: string;
@@ -16,10 +17,15 @@ interface IVulnerableFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>
+  onUpdate: (data: { [key: string]: string }) => Promise<void>;
 }
 
-export const VulnerableForm = ({ cad, location, dets, onUpdate }: IVulnerableFormProps) => {
+export const VulnerableForm = ({
+  cad,
+  location,
+  dets,
+  onUpdate,
+}: IVulnerableFormProps) => {
   const form = useForm<VulnerableFormFields>({
     defaultValues: {
       generalActions:
@@ -42,15 +48,15 @@ export const VulnerableForm = ({ cad, location, dets, onUpdate }: IVulnerableFor
 - VULNERABILITY - Vulnerability is defined for the purpose of incident management as “a person is vulnerable if as a result of their situation or circumstances they are unable to take care or protect themselves or others from harm or exploitation.
 - ENGAGEMENT - Engagement is where organisations and individuals build positive relationships for the benefit of all parties.
 - PREVENTION and INTERVENTION - Prevention and intervention is identifying opportunities to prevent further incidents occurring or worsening of threat, risk and harm and allocating the most appropriate resources (Police or Partnership) to intervene before further, more serious police intervention is required.`,
-    safeguardingDetails:
+      safeguardingDetails:
         dets?.["safeguardingDetails"] ||
         ` Please provide full detail of specific concerns`,
-    safeguardingActions:
-      dets?.["safeguardingActions"] ||
-      `Please describe safeguarding actions taken`,
-    safeguardingDescription:
-      dets?.["safeguardingDescription"] ||
-      `***VAF***
+      safeguardingActions:
+        dets?.["safeguardingActions"] ||
+        `Please describe safeguarding actions taken`,
+      safeguardingDescription:
+        dets?.["safeguardingDescription"] ||
+        `***VAF***
 Appearance: 
 Behaviour: 
 Communication: 
@@ -59,21 +65,18 @@ Environment: `,
     },
   });
 
-  useRhfAutosave({
+  const { isSaving, hasPendingChanges } = useRhfAutosaveConfig(onUpdate, {
     form,
-    transport: async (data) => {
-      await onUpdate(data as ({ [key: string]: string }));
-      
-      return {
-        ok: true,
-      };
-    },
   });
 
   const { register } = form;
 
   return (
     <div className="flex flex-col gap-4">
+      <StatusIndicator
+        isSaving={isSaving}
+        hasPendingChanges={hasPendingChanges}
+      />
       <Textbox
         label="Circumstances / Actions"
         helperText="Provide a narrative of what happened, when, where, who was involved and why"
@@ -89,7 +92,9 @@ Environment: `,
         rows={15}
         {...register("thrive")}
       />
-      <IcTypography variant="h3" className="my-2">Safeguarding Triage</IcTypography>
+      <IcTypography variant="h3" className="my-2">
+        Safeguarding Triage
+      </IcTypography>
       <Textbox
         label="Concerns"
         helperText="Describe in full detail what are the specific concerns for the individual"
