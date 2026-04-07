@@ -23,6 +23,7 @@ interface IDomesticFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
+  onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
 export const DomesticForm = ({ id, cad, location, dets }: IDomesticFormProps) => {
