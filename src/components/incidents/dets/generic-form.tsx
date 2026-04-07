@@ -22,7 +22,7 @@ interface IGenericFormProps {
   onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const GenericForm = ({ id, cad, location, dets }: IGenericFormProps) => {
+export const GenericForm = ({ id, cad, location, dets, onUpdate }: IGenericFormProps) => {
   const { incidentService } = useAppContext();
 
   const form = useForm<GenericFormFields>({
@@ -101,10 +101,7 @@ export const GenericForm = ({ id, cad, location, dets }: IGenericFormProps) => {
   useRhfAutosave({
     form,
     transport: async (data) => {
-      console.log("Autosaving data:", data);
-      await incidentService.update(id, {
-        dets: { ...dets, ...(data as { [key: string]: string }) },
-      });
+      await onUpdate(data as ({ [key: string]: string }));
       return {
         ok: true,
       };
