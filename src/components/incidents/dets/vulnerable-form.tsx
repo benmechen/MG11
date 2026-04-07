@@ -44,7 +44,6 @@ export const VulnerableForm = ({ id, cad, location, dets }: IVulnerableFormProps
 - VULNERABILITY - Vulnerability is defined for the purpose of incident management as “a person is vulnerable if as a result of their situation or circumstances they are unable to take care or protect themselves or others from harm or exploitation.
 - ENGAGEMENT - Engagement is where organisations and individuals build positive relationships for the benefit of all parties.
 - PREVENTION and INTERVENTION - Prevention and intervention is identifying opportunities to prevent further incidents occurring or worsening of threat, risk and harm and allocating the most appropriate resources (Police or Partnership) to intervene before further, more serious police intervention is required.`,
-    },
     safeguardingDetails:
         dets?.["safeguardingDetails"] ||
         ` Please provide full detail of specific concerns`,
@@ -54,11 +53,12 @@ export const VulnerableForm = ({ id, cad, location, dets }: IVulnerableFormProps
     safeguardingDescription:
       dets?.["safeguardingDescription"] ||
       `***VAF***
-Appearance:
-Behaviour:
-Communication:
-Danger:
-Environment:`,
+Appearance: 
+Behaviour: 
+Communication: 
+Danger: 
+Environment: `,
+    },
   });
 
   useRhfAutosave({
