@@ -68,6 +68,12 @@ function RouteComponent() {
     ? `${incident.cadNumber.toString()}/${incident.date.replaceAll("-", "")}`
     : "";
 
+  const updateDets = async (data: { [key: string]: string }) => {
+      const updatedDets = Object.entries(data).reduce((acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }), {})
+      console.log("Autosaving data:", updatedDets);
+      await incidentService.update(id, updatedDets as any);
+  }
+
   return (
     <IcSectionContainer aligned="center">
       <FormSectionContainer>
@@ -101,6 +107,7 @@ function RouteComponent() {
               cad={formattedCAD}
               location={incident?.location}
               dets={incident?.dets}
+              onUpdate={updateDets}
             />
           )}
           {detsType === "vulnerable" && (
@@ -109,6 +116,7 @@ function RouteComponent() {
               cad={formattedCAD}
               location={incident?.location}
               dets={incident?.dets}
+              onUpdate={updateDets}
             />
           )}
           {detsType === "domestic" && (
@@ -117,6 +125,7 @@ function RouteComponent() {
               cad={formattedCAD}
               location={incident?.location}
               dets={incident?.dets}
+              onUpdate={updateDets}
             />
           )}
         </div>
