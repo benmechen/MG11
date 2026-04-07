@@ -17,9 +17,10 @@ interface IVulnerableFormProps {
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
+  onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const VulnerableForm = ({ id, cad, location, dets }: IVulnerableFormProps) => {
+export const VulnerableForm = ({ id, cad, location, dets, onUpdate }: IVulnerableFormProps) => {
   const { incidentService } = useAppContext();
 
   const form = useForm<VulnerableFormFields>({
