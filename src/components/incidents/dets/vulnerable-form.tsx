@@ -64,9 +64,11 @@ Environment: `,
   useRhfAutosave({
     form,
     transport: async (data) => {
-      console.log("Autosaving data:", data);
+      const updatedDets = Object.entries(data).reduce((acc, curr) => { ...acc, `dets.${curr[0]}`: curr }, {})
+      console.log("Autosaving data:", updatedDets);
       await incidentService.update(id, {
-        dets: { ...dets, ...(data as { [key: string]: string }) },
+        
+        dets: updatedDets as any,
       });
       return {
         ok: true,
