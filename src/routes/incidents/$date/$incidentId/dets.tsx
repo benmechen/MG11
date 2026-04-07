@@ -69,9 +69,10 @@ function RouteComponent() {
     : "";
 
   const updateDets = async (data: { [key: string]: string }) => {
+      if (!incident) return;
       const updatedDets = Object.entries(data).reduce((acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }), {})
       console.log("Autosaving data:", updatedDets);
-      await incidentService.update(id, updatedDets as any);
+      await incidentService.update(incident.id, updatedDets as any);
   }
 
   return (
