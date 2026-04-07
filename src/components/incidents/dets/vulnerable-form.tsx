@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useRhfAutosave } from "react-hook-form-autosave";
 import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
-import { useAppContext } from "../../app-context";
 
 interface VulnerableFormFields {
   generalActions?: string;
@@ -20,9 +19,7 @@ interface IVulnerableFormProps {
   onUpdate: (data: { [key: string]: string }) => Promise<void>
 }
 
-export const VulnerableForm = ({ id, cad, location, dets, onUpdate }: IVulnerableFormProps) => {
-  const { incidentService } = useAppContext();
-
+export const VulnerableForm = ({ cad, location, dets, onUpdate }: IVulnerableFormProps) => {
   const form = useForm<VulnerableFormFields>({
     defaultValues: {
       generalActions:
