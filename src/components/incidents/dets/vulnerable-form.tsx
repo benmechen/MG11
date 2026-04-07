@@ -62,7 +62,7 @@ Environment: `,
   useRhfAutosave({
     form,
     transport: async (data) => {
-      await onUpdate(data as { [key: string}: string });
+      await onUpdate(data as ({ [key: string]: string }));
       
       return {
         ok: true,
