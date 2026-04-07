@@ -50,6 +50,8 @@ export default defineConfig({
       workbox: {
         // Files to precache (loaded when service worker installs)
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
+        
+        maximumFileSizeToCacheInBytes: 3000000,
 
         // Runtime caching strategies for different resource types
         runtimeCaching: [
