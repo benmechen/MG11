@@ -42,6 +42,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (detsType && incident) {
+      incident.dets.type = detsType;
       incidentService.update(incident.id, {
         dets: {
           ...incident.dets,
