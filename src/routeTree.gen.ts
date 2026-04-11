@@ -27,6 +27,7 @@ import { Route as StatementsStatementIdDetailsImport } from './routes/statements
 import { Route as StatementsStatementIdConsentImport } from './routes/statements/$statementId/consent'
 import { Route as IncidentsDateIncidentIdRouteImport } from './routes/incidents/$date/$incidentId/route'
 import { Route as IncidentsDateIncidentIdOverviewImport } from './routes/incidents/$date/$incidentId/overview'
+import { Route as IncidentsDateIncidentIdImportImport } from './routes/incidents/$date/$incidentId/import'
 import { Route as IncidentsDateIncidentIdExportImport } from './routes/incidents/$date/$incidentId/export'
 import { Route as IncidentsDateIncidentIdDetsImport } from './routes/incidents/$date/$incidentId/dets'
 
@@ -133,6 +134,13 @@ const IncidentsDateIncidentIdOverviewRoute =
   IncidentsDateIncidentIdOverviewImport.update({
     id: '/overview',
     path: '/overview',
+    getParentRoute: () => IncidentsDateIncidentIdRouteRoute,
+  } as any)
+
+const IncidentsDateIncidentIdImportRoute =
+  IncidentsDateIncidentIdImportImport.update({
+    id: '/import',
+    path: '/import',
     getParentRoute: () => IncidentsDateIncidentIdRouteRoute,
   } as any)
 
@@ -273,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IncidentsDateIncidentIdExportImport
       parentRoute: typeof IncidentsDateIncidentIdRouteImport
     }
+    '/incidents/$date/$incidentId/import': {
+      id: '/incidents/$date/$incidentId/import'
+      path: '/import'
+      fullPath: '/incidents/$date/$incidentId/import'
+      preLoaderRoute: typeof IncidentsDateIncidentIdImportImport
+      parentRoute: typeof IncidentsDateIncidentIdRouteImport
+    }
     '/incidents/$date/$incidentId/overview': {
       id: '/incidents/$date/$incidentId/overview'
       path: '/overview'
@@ -319,6 +334,7 @@ const StatementsStatementIdRouteRouteWithChildren =
 interface IncidentsDateIncidentIdRouteRouteChildren {
   IncidentsDateIncidentIdDetsRoute: typeof IncidentsDateIncidentIdDetsRoute
   IncidentsDateIncidentIdExportRoute: typeof IncidentsDateIncidentIdExportRoute
+  IncidentsDateIncidentIdImportRoute: typeof IncidentsDateIncidentIdImportRoute
   IncidentsDateIncidentIdOverviewRoute: typeof IncidentsDateIncidentIdOverviewRoute
 }
 
@@ -326,6 +342,7 @@ const IncidentsDateIncidentIdRouteRouteChildren: IncidentsDateIncidentIdRouteRou
   {
     IncidentsDateIncidentIdDetsRoute: IncidentsDateIncidentIdDetsRoute,
     IncidentsDateIncidentIdExportRoute: IncidentsDateIncidentIdExportRoute,
+    IncidentsDateIncidentIdImportRoute: IncidentsDateIncidentIdImportRoute,
     IncidentsDateIncidentIdOverviewRoute: IncidentsDateIncidentIdOverviewRoute,
   }
 
@@ -352,6 +369,7 @@ export interface FileRoutesByFullPath {
   '/incidents/new/': typeof IncidentsNewIndexRoute
   '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/incidents/$date/$incidentId/export': typeof IncidentsDateIncidentIdExportRoute
+  '/incidents/$date/$incidentId/import': typeof IncidentsDateIncidentIdImportRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdOverviewRoute
 }
 
@@ -372,6 +390,7 @@ export interface FileRoutesByTo {
   '/incidents/new': typeof IncidentsNewIndexRoute
   '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/incidents/$date/$incidentId/export': typeof IncidentsDateIncidentIdExportRoute
+  '/incidents/$date/$incidentId/import': typeof IncidentsDateIncidentIdImportRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdOverviewRoute
 }
 
@@ -394,6 +413,7 @@ export interface FileRoutesById {
   '/incidents/new/': typeof IncidentsNewIndexRoute
   '/incidents/$date/$incidentId/dets': typeof IncidentsDateIncidentIdDetsRoute
   '/incidents/$date/$incidentId/export': typeof IncidentsDateIncidentIdExportRoute
+  '/incidents/$date/$incidentId/import': typeof IncidentsDateIncidentIdImportRoute
   '/incidents/$date/$incidentId/overview': typeof IncidentsDateIncidentIdOverviewRoute
 }
 
@@ -417,6 +437,7 @@ export interface FileRouteTypes {
     | '/incidents/new/'
     | '/incidents/$date/$incidentId/dets'
     | '/incidents/$date/$incidentId/export'
+    | '/incidents/$date/$incidentId/import'
     | '/incidents/$date/$incidentId/overview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -436,6 +457,7 @@ export interface FileRouteTypes {
     | '/incidents/new'
     | '/incidents/$date/$incidentId/dets'
     | '/incidents/$date/$incidentId/export'
+    | '/incidents/$date/$incidentId/import'
     | '/incidents/$date/$incidentId/overview'
   id:
     | '__root__'
@@ -456,6 +478,7 @@ export interface FileRouteTypes {
     | '/incidents/new/'
     | '/incidents/$date/$incidentId/dets'
     | '/incidents/$date/$incidentId/export'
+    | '/incidents/$date/$incidentId/import'
     | '/incidents/$date/$incidentId/overview'
   fileRoutesById: FileRoutesById
 }
@@ -550,6 +573,7 @@ export const routeTree = rootRoute
       "children": [
         "/incidents/$date/$incidentId/dets",
         "/incidents/$date/$incidentId/export",
+        "/incidents/$date/$incidentId/import",
         "/incidents/$date/$incidentId/overview"
       ]
     },
@@ -579,6 +603,10 @@ export const routeTree = rootRoute
     },
     "/incidents/$date/$incidentId/export": {
       "filePath": "incidents/$date/$incidentId/export.tsx",
+      "parent": "/incidents/$date/$incidentId"
+    },
+    "/incidents/$date/$incidentId/import": {
+      "filePath": "incidents/$date/$incidentId/import.tsx",
       "parent": "/incidents/$date/$incidentId"
     },
     "/incidents/$date/$incidentId/overview": {

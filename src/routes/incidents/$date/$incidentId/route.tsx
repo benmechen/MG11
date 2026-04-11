@@ -17,6 +17,7 @@ import {
   mdiContentCopy,
   mdiEmail,
   mdiExportVariant,
+  mdiLinkVariant,
   mdiPencil,
   mdiText,
 } from "@mdi/js";
@@ -26,6 +27,7 @@ import { DeleteButton } from "../../../../components/delete-button";
 import { formatEmail } from "../../../../utils/formatEmail";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useAppContext } from "../../../../components/app-context";
+import { ShareIncidentModal } from "../../../../components/incidents/share-incident-modal";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
@@ -44,6 +46,7 @@ function RouteComponent() {
   const incident = Route.useLoaderData();
   const navigate = Route.useNavigate();
   const [showDeleteIncident, setShowDeleteIncident] = useState(false);
+  const [showShareIncident, setShowShareIncident] = useState(false);
   const [exportPopoverOpen, setExportPopoverOpen] = useState<boolean>(false);
   const [isEditingLocation, setEditingLocation] = useState(false);
   const [location, setLocation] = useState(incident?.location);
@@ -116,12 +119,20 @@ function RouteComponent() {
           navigate({ to: "/incidents" });
         }}
       />
+      <ShareIncidentModal
+        id={incident.id}
+        open={showShareIncident}
+        onClose={() => setShowShareIncident(false)}
+      />
       <IcPopoverMenu
         anchor="export-button"
         aria-label="popover"
         open={exportPopoverOpen}
         onIcPopoverClosed={handlePopoverClosed}
       >
+        <IcMenuItem label="Link" onClick={() => setShowShareIncident(true)}>
+          <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiLinkVariant} />
+        </IcMenuItem>
         <IcMenuItem label="Email" onClick={openEmail}>
           <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiEmail} />
         </IcMenuItem>
