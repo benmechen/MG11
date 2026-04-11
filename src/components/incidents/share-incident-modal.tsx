@@ -48,7 +48,6 @@ export const ShareIncidentModal = ({
       heading="Share Incident"
       label="Share a copy of this incident"
       open={open}
-      // size="small"
       onIcDialogClosed={(open && onClose) || undefined}
       hideDefaultControls
     >
