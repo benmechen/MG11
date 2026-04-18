@@ -101,9 +101,12 @@ function RouteComponent() {
                 <IcTypography variant="subtitle-large" className="font-bold">
                   {camelCaseToWords(key)}:
                 </IcTypography>
-                <IcTypography className="whitespace-pre-line">
-                  {value}
-                </IcTypography>
+                <p
+                  className="whitespace-pre-line"
+                  dangerouslySetInnerHTML={{
+                    __html: value.replace(/(?:\r\n|\r|\n)/g, "<br>"),
+                  }}
+                />
               </div>
             ))}
         </>

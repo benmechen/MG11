@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IcButton, IcDialog, IcTypography } from "@ukic/react";
-// import { sign } from "jsonwebtoken";
 import * as jose from "jose";
 import { useAppContext } from "../app-context";
 
