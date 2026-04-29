@@ -6,40 +6,20 @@ export const populate = async () =>
       name: "Generic Statement",
       description: "Generic witness statement",
       fields: [],
-      statement: "this is my statement",
+      statement: `This is my statement regarding...
+      
+In this statement I will refer to the following people;
+
+In this statement I will refer to the following locations;
+
+On DAY DATE TIME PLACE...`,
       created: Date.now(),
     },
     {
       name: "Arrest Statement",
       description: "Generic officer arrest statement",
       fields: [],
-      statement: "this is my statement",
-      created: Date.now(),
-    },
-    {
-      name: "Assualt",
-      description: "Common assualt, ABH and GBH level assualts",
-      fields: [
-        {
-          name: "firstName",
-          label: "First Name",
-          type: "text",
-        },
-      ],
-      statement: "",
-      created: Date.now(),
-    },
-    {
-      name: "Theft",
-      description: "All types of theft",
-      fields: [
-        {
-          name: "firstName",
-          label: "First Name",
-          type: "text",
-        },
-      ],
-      statement: "",
+      statement: "This is my statement regarding the arrest of...",
       created: Date.now(),
     },
   ]);

@@ -36,6 +36,7 @@ function RouteComponent() {
   const incidents = Route.useLoaderData();
   const { statementId } = Route.useParams();
   const [people, setPeople] = useState<Person[]>([]);
+  const [personId, setPersonId] = useState<number>();
 
   const incidentValue = watch("incident");
 
@@ -74,6 +75,7 @@ function RouteComponent() {
         ...data.witness,
       },
       statement: data.statement,
+      personId,
     });
   };
 
@@ -122,7 +124,11 @@ function RouteComponent() {
             {...register("witness.occupation")}
           />
 
-          <PeopleSelection people={people} setValue={setValue} />
+          <PeopleSelection
+            people={people}
+            setPersonId={setPersonId}
+            setValue={setValue}
+          />
 
           <NewPersonForm
             index={0}

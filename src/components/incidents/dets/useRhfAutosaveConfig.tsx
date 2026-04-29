@@ -2,7 +2,7 @@ import { FieldValues } from "react-hook-form";
 import { RhfAutosaveOptions, useRhfAutosave } from "react-hook-form-autosave";
 
 export const useRhfAutosaveConfig = <T extends FieldValues>(
-  onUpdate: (data: { [key: string]: string }) => Promise<void>,
+  onUpdate: (data: T) => Promise<void>,
   { form }: Partial<RhfAutosaveOptions<T>>,
 ) =>
   useRhfAutosave({
@@ -11,7 +11,7 @@ export const useRhfAutosaveConfig = <T extends FieldValues>(
       debounceMs: 250,
     },
     transport: async (data) => {
-      await onUpdate(data as { [key: string]: string });
+      await onUpdate(data as T);
       return {
         ok: true,
       };

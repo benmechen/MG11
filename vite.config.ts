@@ -16,8 +16,8 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
 
       manifest: {
-        name: "Response Hub",
-        short_name: "Response Hub",
+        name: "MG11",
+        short_name: "MG11",
         description: "Take statements, manage people, and build investigations",
         theme_color: "#ffffff",
         icons: [
@@ -50,7 +50,7 @@ export default defineConfig({
       workbox: {
         // Files to precache (loaded when service worker installs)
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
-        
+
         maximumFileSizeToCacheInBytes: 3000000,
 
         // Runtime caching strategies for different resource types

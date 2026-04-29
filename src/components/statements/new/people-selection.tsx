@@ -8,9 +8,11 @@ import { INewDocumentFields } from "../../../routes/statements/$statementId/rout
 export const PeopleSelection = ({
   people,
   setValue,
+  setPersonId,
 }: {
   people: Person[];
   setValue: UseFormSetValue<INewDocumentFields>;
+  setPersonId: (id: number) => void;
 }) => {
   if (people.length === 0) return <></>;
 
@@ -25,6 +27,7 @@ export const PeopleSelection = ({
           clickable
           heading={`${person.firstName} ${person.lastName}`}
           onClick={() => {
+            setPersonId(person.id);
             setValue("witness", {
               firstName: person.firstName ?? "",
               lastName: person.lastName ?? "",

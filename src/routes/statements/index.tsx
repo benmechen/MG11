@@ -63,6 +63,8 @@ function RouteComponent() {
           <DocumentCard
             key={statement.id}
             name={`Statement ${String(statement.id).trim()}`}
+            personId={statement.personId}
+            incidentId={statement.incidentId}
             created={new Date(statement.created)}
             lastUpdate={new Date(statement.updated)}
             status={statement.status}

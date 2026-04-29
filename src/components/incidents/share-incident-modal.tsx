@@ -3,6 +3,10 @@ import { IcButton, IcDialog, IcTypography } from "@ukic/react";
 import * as jose from "jose";
 import { useAppContext } from "../app-context";
 
+export const secret = new TextEncoder().encode(
+  "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2",
+);
+
 interface IShareIncidentModal {
   id: number;
   open: boolean;
@@ -21,10 +25,7 @@ export const ShareIncidentModal = ({
     const generateLink = async () => {
       const incident = await incidentService.findById(id);
       if (!incident) return;
-      console.log("Incident for sharing:", incident, typeof incident);
-      const secret = new TextEncoder().encode(
-        "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2",
-      );
+
       const alg = "HS256";
 
       const jwt = await new jose.SignJWT({
@@ -34,7 +35,7 @@ export const ShareIncidentModal = ({
         .sign(secret);
 
       setShareLink(
-        `https://${window.location.hostname}/incidents/${incident?.date}/${incident?.cadNumber}/import?token=${jwt}`,
+        `https://${window.location.hostname}/incidents/import?token=${jwt}`,
       );
     };
 

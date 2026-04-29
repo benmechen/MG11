@@ -4,11 +4,13 @@ import {
   NewDocumentPageHeaderStep,
 } from "../../../components/statements/new/header";
 import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
-import { IcTextField } from "@ukic/react";
 import { useFormContext } from "react-hook-form";
 import { INewDocumentFields } from "./route";
 import { isValidId } from "../../../utils/isValidId";
 import { useAppContext } from "../../../components/app-context";
+import { useRhfAutosaveConfig } from "../../../components/incidents/dets/useRhfAutosaveConfig";
+import { StatusIndicator } from "../../../components/incidents/dets/status-indicator";
+import { Textbox } from "../../../components/incidents/dets/textbox";
 
 export const Route = createFileRoute("/statements/$statementId/statement")({
   component: RouteComponent,
@@ -18,12 +20,16 @@ function RouteComponent() {
   const { statementService } = useAppContext();
   const { statementId } = Route.useParams();
   const navigate = useNavigate({ from: "/statements/$statementId/statement" });
-  const { register, getValues } = useFormContext<INewDocumentFields>();
+  const form = useFormContext<INewDocumentFields>();
 
-  const saveStatement = async () => {
+  const { register, getValues } = form;
+
+  const delay = (durationMs: number) => {
+    return new Promise((resolve) => setTimeout(resolve, durationMs));
+  };
+
+  const saveStatement = async (data: INewDocumentFields, autosave = true) => {
     if (!isValidId(statementId)) return;
-
-    const data = getValues();
 
     await statementService.update(Number(statementId), {
       person: {
@@ -31,7 +37,12 @@ function RouteComponent() {
       },
       statement: data.statement,
     });
+    if (autosave) await delay(250);
   };
+
+  const { isSaving, hasPendingChanges } = useRhfAutosaveConfig(saveStatement, {
+    form,
+  });
 
   return (
     <div className="h-full flex flex-col">
@@ -39,7 +50,7 @@ function RouteComponent() {
         statementId={statementId}
         step={NewDocumentPageHeaderStep.Statement}
         onNext={async () => {
-          await saveStatement();
+          await saveStatement(getValues(), false);
           navigate({
             to: "/statements/$statementId/review",
           });
@@ -50,13 +61,17 @@ function RouteComponent() {
           })
         }
       />
+      <StatusIndicator
+        isSaving={isSaving}
+        hasPendingChanges={hasPendingChanges}
+      />
       <FormSectionContainer>
-        <IcTextField
+        <Textbox
           label="Statement"
           rows={40}
-          resize
-          fullWidth
-          spellcheck
+          // resize
+          // fullWidth
+          // spellcheck
           {...register("statement")}
         />
       </FormSectionContainer>

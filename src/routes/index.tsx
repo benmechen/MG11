@@ -24,7 +24,7 @@ function RouteComponent() {
   return (
     <>
       <IcHero
-        heading="Response Hub"
+        heading="MG11"
         subheading="Take statements, manage people, and build investigations"
       >
         <IcButton
