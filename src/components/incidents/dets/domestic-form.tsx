@@ -4,7 +4,7 @@ import { Textbox } from "./textbox";
 import { StatusIndicator } from "./status-indicator";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 
-interface DomesticFormFields {
+interface DomesticFormFields extends Record<string, string | undefined> {
   generalActions?: string;
   scenes?: string;
   forensic?: string;
@@ -18,12 +18,12 @@ interface DomesticFormFields {
   safeguardingDescription?: string;
 }
 
-interface IDomesticFormProps {
+interface IDomesticFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>;
+  onUpdate: (data: T) => Promise<void>;
 }
 
 export const DomesticForm = ({
@@ -31,7 +31,7 @@ export const DomesticForm = ({
   location,
   dets,
   onUpdate,
-}: IDomesticFormProps) => {
+}: IDomesticFormProps<DomesticFormFields>) => {
   const form = useForm<DomesticFormFields>({
     defaultValues: {
       generalActions:

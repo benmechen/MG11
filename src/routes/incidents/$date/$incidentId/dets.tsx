@@ -69,7 +69,7 @@ function RouteComponent() {
     return new Promise((resolve) => setTimeout(resolve, durationMs));
   };
 
-  const updateDets = async (data: { [key: string]: string }) => {
+  const updateDets = async (data: Record<string, string | undefined>) => {
     if (!incident) return;
     const updatedDets = Object.entries(data).reduce(
       (acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }),

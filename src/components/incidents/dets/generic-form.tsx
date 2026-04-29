@@ -3,7 +3,7 @@ import { Textbox } from "./textbox";
 import { StatusIndicator } from "./status-indicator";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 
-export interface GenericFormFields {
+export interface GenericFormFields extends Record<string, string | undefined> {
   generalActions?: string;
   scenes?: string;
   forensic?: string;
@@ -14,12 +14,12 @@ export interface GenericFormFields {
   thrive?: string;
 }
 
-interface IGenericFormProps {
+interface IGenericFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>;
+  onUpdate: (data: T) => Promise<void>;
 }
 
 export const GenericForm = ({
@@ -27,7 +27,7 @@ export const GenericForm = ({
   location,
   dets,
   onUpdate,
-}: IGenericFormProps) => {
+}: IGenericFormProps<GenericFormFields>) => {
   const form = useForm<GenericFormFields>({
     defaultValues: {
       generalActions:
@@ -101,9 +101,10 @@ export const GenericForm = ({
     },
   });
 
-  const { isSaving, hasPendingChanges } = useRhfAutosaveConfig(onUpdate, {
-    form,
-  });
+  const { isSaving, hasPendingChanges } =
+    useRhfAutosaveConfig<GenericFormFields>(onUpdate, {
+      form,
+    });
 
   const { register } = form;
 

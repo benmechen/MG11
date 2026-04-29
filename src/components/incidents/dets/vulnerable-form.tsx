@@ -4,7 +4,7 @@ import { Textbox } from "./textbox";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 import { StatusIndicator } from "./status-indicator";
 
-interface VulnerableFormFields {
+interface VulnerableFormFields extends Record<string, string | undefined> {
   generalActions?: string;
   safeguardingDetails?: string;
   safeguardingActions?: string;
@@ -12,12 +12,12 @@ interface VulnerableFormFields {
   thrive?: string;
 }
 
-interface IVulnerableFormProps {
+interface IVulnerableFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
   location?: string;
   dets?: { [key: string]: string };
-  onUpdate: (data: { [key: string]: string }) => Promise<void>;
+  onUpdate: (data: T) => Promise<void>;
 }
 
 export const VulnerableForm = ({
@@ -25,7 +25,7 @@ export const VulnerableForm = ({
   location,
   dets,
   onUpdate,
-}: IVulnerableFormProps) => {
+}: IVulnerableFormProps<VulnerableFormFields>) => {
   const form = useForm<VulnerableFormFields>({
     defaultValues: {
       generalActions:
