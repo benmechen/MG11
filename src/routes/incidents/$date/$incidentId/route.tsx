@@ -229,6 +229,26 @@ function RouteComponent() {
               })
             }
           />
+          <IcNavigationItem
+            slot="tabs"
+            label="DARA"
+            href={`/incidents/${incident?.date}/${incident?.cadNumber}/dara`}
+            selected={
+              !!matchRoute({
+                to: "/incidents/$date/$incidentId/dara",
+              })
+            }
+          />
+          {/* <IcNavigationItem
+            slot="tabs"
+            label="124H"
+            href={`/incidents/${incident?.date}/${incident?.cadNumber}/124h`}
+            selected={
+              !!matchRoute({
+                to: "/incidents/$date/$incidentId/124h",
+              })
+            }
+          /> */}
         </IcPageHeader>
         <Outlet />
       </div>

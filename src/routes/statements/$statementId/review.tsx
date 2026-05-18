@@ -34,6 +34,7 @@ function RouteComponent() {
   const forenames = watch("witness.firstName");
   const surname = watch("witness.lastName");
   const dateOfBirth = watch("witness.dateOfBirth");
+  const over18 = watch("witness.over18");
   const occupation = watch("witness.occupation");
   const statement = watch("statement");
 
@@ -98,6 +99,7 @@ function RouteComponent() {
         forenames: forenames ?? "",
         surname: surname ?? "",
         dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : new Date(),
+        over18: over18,
         occupation: occupation || "N/A",
       }}
       metadata={{

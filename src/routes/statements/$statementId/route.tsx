@@ -17,13 +17,13 @@ export const Route = createFileRoute("/statements/$statementId")({
     if (!isValidId(params.statementId)) return {};
 
     const statement = await context.statementService.getById(
-      params.statementId!
+      params.statementId!,
     );
 
     if (!statement.templateId) return { statement };
 
     const template = await context.templateService.getById(
-      statement.templateId!
+      statement.templateId!,
     );
 
     return {
@@ -41,9 +41,12 @@ function RouteComponent() {
       witness: {
         ...statement?.person,
         phoneNumber: statement?.person?.phoneNumber || "+44 ",
-        dateOfBirth: statement?.person?.dateOfBirth
-          ? new Date(statement.person.dateOfBirth)
-          : undefined,
+        dateOfBirth:
+          statement?.person?.dateOfBirth &&
+          statement?.person?.dateOfBirth.length > 0
+            ? new Date(statement.person.dateOfBirth)
+            : undefined,
+        over18: !statement?.person?.dateOfBirth,
       },
       statement: statement?.statement || template?.statement || "",
       incident: statement?.incident

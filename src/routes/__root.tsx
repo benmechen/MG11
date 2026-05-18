@@ -25,7 +25,7 @@ function RootComponent() {
   }, []);
 
   return (
-    <main className="!flex max-h-screen h-screen w-screen max-w-screen">
+    <main className="!flex max-h-screen min-h-screen h-screen w-screen max-w-screen">
       <SideNavigation />
       <div className="max-w-full w-full overflow-y-auto">
         <Outlet />

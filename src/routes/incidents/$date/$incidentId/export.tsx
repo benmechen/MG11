@@ -4,6 +4,7 @@ import { IcButton, IcTypography, SlottedSVG } from "@ukic/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useAppContext } from "../../../../components/app-context";
 import { camelCaseToWords } from "../../../../utils/formatEmail";
+import { daraQuestions } from "../../../../utils/daraQuestions";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId/export")({
   component: RouteComponent,
@@ -109,6 +110,29 @@ function RouteComponent() {
                 />
               </div>
             ))}
+        </>
+      )}
+
+      {incident?.dara && (
+        <>
+          <IcTypography variant="h3" className="mt-6 mb-4">
+            DARA
+          </IcTypography>
+          {Object.entries(daraQuestions).map(([key, value]) => (
+            <div key={key} className="mb-4">
+              <IcTypography variant="subtitle-large" className="font-bold mb-2">
+                {value}
+              </IcTypography>
+              {incident?.dara?.[key] && (
+                <span
+                  className="whitespace-pre-line"
+                  dangerouslySetInnerHTML={{
+                    __html: `${camelCaseToWords(incident?.dara?.[key]?.rating).toUpperCase()} - ${incident?.dara?.[key]?.comments?.replace(/(?:\r\n|\r|\n)/g, "<br>") ?? ""}`,
+                  }}
+                />
+              )}
+            </div>
+          ))}
         </>
       )}
     </div>

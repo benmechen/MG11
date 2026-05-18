@@ -1,5 +1,6 @@
 import Incident from "../db/models/incident";
 import Person from "../db/models/person";
+import { daraQuestions } from "./daraQuestions";
 
 export const camelCaseToWords = (s: string) =>
   s.replace(/([A-Z])/g, " $1").toUpperCase();
@@ -29,6 +30,16 @@ ${Object.entries(incident.dets ?? {})
       `${camelCaseToWords(key)}:\n${value}\n\n--------------------------------\n`,
   )
   .join("\n")}
+${
+  incident?.dara &&
+  "DARA:\n" +
+    Object.entries(daraQuestions)
+      .map(
+        ([key, value]) =>
+          `${value}\n${camelCaseToWords(incident?.dara?.[key]?.rating ?? "N/A").toUpperCase()} ${incident?.dara?.[key]?.comments ? "-" : ""} ${incident?.dara?.[key]?.comments ?? ""}`,
+      )
+      .join("\n\n")
+}
 `;
 
   return new URL(

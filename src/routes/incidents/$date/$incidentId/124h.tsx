@@ -11,9 +11,8 @@ import { VulnerableForm } from "../../../../components/incidents/dets/vulnerable
 import { DomesticForm } from "../../../../components/incidents/dets/domestic-form";
 import { FormSectionContainer } from "../../../../components/statements/new/form-section-container";
 import { useAppContext } from "../../../../components/app-context";
-import { flattenObject } from "react-hook-form-autosave";
 
-export const Route = createFileRoute("/incidents/$date/$incidentId/dets")({
+export const Route = createFileRoute("/incidents/$date/$incidentId/124h")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const incident = await context.incidentService.findByCad(
@@ -72,7 +71,10 @@ function RouteComponent() {
 
   const updateDets = async (data: Record<string, string | undefined>) => {
     if (!incident) return;
-    const updatedDets = flattenObject(data);
+    const updatedDets = Object.entries(data).reduce(
+      (acc, curr) => ({ ...acc, [`dets.${curr[0]}`]: curr[1] }),
+      {},
+    );
     await incidentService.update(incident.id, updatedDets);
     await delay(250);
   };

@@ -7,4 +7,7 @@ export default class Incident extends Entity<AppDB> {
   date!: string;
   location?: string;
   dets?: { [key: string]: string };
+  dara?: {
+    [key: string]: { rating: string; label: string; comments?: string };
+  };
 }

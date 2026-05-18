@@ -1,6 +1,6 @@
 import { IcDialog } from "@ukic/react";
 import { NewPersonForm } from "../../people/new/form";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { PersonService } from "../../../services/person/person";
 import { db } from "../../../db";
 
@@ -14,6 +14,7 @@ export interface INewPersonForm {
   firstName?: string;
   lastName?: string;
   dateOfBirth?: Date;
+  over18?: boolean;
   phoneNumber?: string;
   emailAddress?: string;
   address?: {
@@ -31,7 +32,8 @@ export const NewPersonModal = ({
   incidentId,
   onClose,
 }: INewPersonModal) => {
-  const { register, handleSubmit } = useForm<INewPersonForm>();
+  const methods = useForm<INewPersonForm>();
+  const { register, handleSubmit } = methods;
 
   const onSubmit = async (data: INewPersonForm) => {
     await personService.create({
@@ -42,24 +44,26 @@ export const NewPersonModal = ({
   };
 
   return (
-    <IcDialog
-      heading="New Person"
-      label="Add a new person to this incident"
-      open={open}
-      size="medium"
-      onIcDialogClosed={(open && onClose) || undefined}
-      // @ts-expect-error Types
-      onIcDialogConfirmed={handleSubmit(onSubmit)}
-      onIcDialogCancelled={onClose}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <NewPersonForm
-          index={0}
-          header={false}
-          onClose={onClose}
-          register={register}
-        />
-      </form>
-    </IcDialog>
+    <FormProvider {...methods}>
+      <IcDialog
+        heading="New Person"
+        label="Add a new person to this incident"
+        open={open}
+        size="medium"
+        onIcDialogClosed={(open && onClose) || undefined}
+        // @ts-expect-error Types
+        onIcDialogConfirmed={handleSubmit(onSubmit)}
+        onIcDialogCancelled={onClose}
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <NewPersonForm
+            index={0}
+            header={false}
+            onClose={onClose}
+            register={register}
+          />
+        </form>
+      </IcDialog>
+    </FormProvider>
   );
 };

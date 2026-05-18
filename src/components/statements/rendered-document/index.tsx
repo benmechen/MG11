@@ -8,6 +8,7 @@ interface IRenderedDocument {
     forenames: string;
     surname: string;
     dateOfBirth: Date;
+    over18?: boolean;
     occupation: string;
   };
   metadata: {
@@ -138,7 +139,7 @@ export const RenderedDocument = ({
               width: "50%",
             }}
           >
-            Age if under 18: {renderAge(witness.dateOfBirth)}
+            Age if under 18: {renderAge(witness.dateOfBirth, witness.over18)}
           </Text>
           <Text
             style={{

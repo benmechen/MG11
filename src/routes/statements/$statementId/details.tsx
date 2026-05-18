@@ -6,7 +6,7 @@ import {
 import { FormSectionContainer } from "../../../components/statements/new/form-section-container";
 import { IcSearchBar, IcTextField, IcTypography } from "@ukic/react";
 import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { FormProvider, useFormContext } from "react-hook-form";
 import { INewDocumentFields } from "./route";
 import { useAppContext } from "../../../components/app-context";
 import Person from "../../../db/models/person";
@@ -31,12 +31,13 @@ export const Route = createFileRoute("/statements/$statementId/details")({
 function RouteComponent() {
   const { statementService, personService, incidentService } = useAppContext();
   const navigate = useNavigate({ from: "/statements/$statementId/details" });
-  const { register, watch, setValue, getValues } =
-    useFormContext<INewDocumentFields>();
+  const methods = useFormContext<INewDocumentFields>();
   const incidents = Route.useLoaderData();
   const { statementId } = Route.useParams();
   const [people, setPeople] = useState<Person[]>([]);
   const [personId, setPersonId] = useState<number>();
+
+  const { register, watch, setValue, getValues } = methods;
 
   const incidentValue = watch("incident");
 
@@ -96,48 +97,50 @@ function RouteComponent() {
           })
         }
       />
-      <FormSectionContainer>
-        <div className="flex flex-col gap-4">
-          <IcTypography variant="h4" className="mb-2">
-            Incident Details
-          </IcTypography>
+      <FormProvider {...methods}>
+        <FormSectionContainer>
+          <div className="flex flex-col gap-4">
+            <IcTypography variant="h4" className="mb-2">
+              Incident Details
+            </IcTypography>
 
-          <IcSearchBar
-            label="Is there a CAD number for this incident?"
-            options={incidents}
-            onIcChange={(ev) => setValue("incident", ev.detail.value)}
-            onIcSubmitSearch={(ev) => setValue("incident", ev.detail.value)}
-            placeholder="000000/DDMMMYY"
-            preventFormSubmitOnSearch
-            autoCapitalize="characters"
-            {...register("incident")}
-          />
-        </div>
-        <div className="flex flex-col gap-4">
-          <IcTypography variant="h4" className="mb-2 mt-10">
-            Witness Details
-          </IcTypography>
-          <IcTextField
-            label="Occupation"
-            helperText="Current or former occupation"
-            required
-            {...register("witness.occupation")}
-          />
+            <IcSearchBar
+              label="Is there a CAD number for this incident?"
+              options={incidents}
+              onIcChange={(ev) => setValue("incident", ev.detail.value)}
+              onIcSubmitSearch={(ev) => setValue("incident", ev.detail.value)}
+              placeholder="000000/DDMMMYY"
+              preventFormSubmitOnSearch
+              autoCapitalize="characters"
+              {...register("incident")}
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            <IcTypography variant="h4" className="mb-2 mt-10">
+              Witness Details
+            </IcTypography>
+            <IcTextField
+              label="Occupation"
+              helperText="Current or former occupation"
+              required
+              {...register("witness.occupation")}
+            />
 
-          <PeopleSelection
-            people={people}
-            setPersonId={setPersonId}
-            setValue={setValue}
-          />
+            <PeopleSelection
+              people={people}
+              setPersonId={setPersonId}
+              setValue={setValue}
+            />
 
-          <NewPersonForm
-            index={0}
-            header={false}
-            register={register}
-            fieldPrefix="witness."
-          />
-        </div>
-      </FormSectionContainer>
+            <NewPersonForm
+              index={0}
+              header={false}
+              register={register}
+              fieldPrefix="witness."
+            />
+          </div>
+        </FormSectionContainer>
+      </FormProvider>
     </div>
   );
 }
