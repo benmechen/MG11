@@ -9,13 +9,12 @@ import {
   IcBreadcrumbGroup,
   IcButton,
   IcPageHeader,
-  IcSectionContainer,
   IcTextField,
   IcTypography,
   SlottedSVG,
 } from "@ukic/react";
 import { useAppContext } from "../../components/app-context";
-import { mdiArrowLeft, mdiCheck, mdiDelete } from "@mdi/js";
+import { mdiArrowLeft, mdiCheck, mdiChevronDown, mdiDelete } from "@mdi/js";
 import { INewTemplateFields } from "./new";
 import { useState } from "react";
 import { DeleteTemplateModal } from "../../components/templates/delete-template-modal";
@@ -40,6 +39,7 @@ function RouteComponent() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const [showDeleteTemplate, setShowDeleteTemplate] = useState(false);
+  const [showVariables, setShowVariables] = useState(false);
 
   const { register, handleSubmit } = useForm<INewTemplateFields>({
     defaultValues: {
@@ -119,10 +119,10 @@ function RouteComponent() {
             <SlottedSVG path={mdiCheck} slot="right-icon" />
           </IcButton>
         </IcPageHeader>
-        <div className="grow p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex flex-col gap-4 items-center">
-          <IcSectionContainer
+        <div className="grow p-4 bg-ic-architectural-40 dark:bg-ic-architectural-700 flex items-start justify-center gap-4">
+          <div
             className="w-2/3 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4"
-            aligned="center"
+            // aligned="center"
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -152,7 +152,44 @@ function RouteComponent() {
                 {...register("statement")}
               />
             </form>
-          </IcSectionContainer>
+          </div>
+          <div className="w-1/4 bg-ic-architectural-white dark:bg-ic-background-primary rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => setShowVariables((v) => !v)}
+            >
+              <IcTypography variant="h4">Variables</IcTypography>
+              <SlottedSVG
+                viewBox="0 0 24 24"
+                path={mdiChevronDown}
+                className={`h-8 w-8 transition-transform ${showVariables ? "rotate-180" : ""}`}
+              />
+            </div>
+            <div
+              className={`mt-4 flex flex-col gap-2 ${showVariables ? "" : "hidden"}`}
+            >
+              <div className="flex">
+                <IcTypography variant="code-small">{"{{ cad }}"}</IcTypography>
+                <IcTypography variant="body" className="ml-2">
+                  - CAD Number
+                </IcTypography>
+              </div>
+              <div className="flex">
+                <IcTypography variant="code-small">{"{{ date }}"}</IcTypography>
+                <IcTypography variant="body" className="ml-2">
+                  - Full Date
+                </IcTypography>
+              </div>
+              <div className="flex">
+                <IcTypography variant="code-small">
+                  {"{{ location }}"}
+                </IcTypography>
+                <IcTypography variant="body" className="ml-2">
+                  - Location
+                </IcTypography>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

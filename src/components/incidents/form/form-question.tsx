@@ -11,7 +11,7 @@ interface IDaraQuestion {
   flush: ReturnType<typeof useRhfAutosaveConfig>["flush"];
 }
 
-export const DaraQuestion = ({
+export const FormQuestion = ({
   name,
   label,
   options,

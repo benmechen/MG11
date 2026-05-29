@@ -72,7 +72,7 @@ function RouteComponent() {
 
   const updateDets = async (data: Record<string, string | undefined>) => {
     if (!incident) return;
-    const updatedDets = flattenObject(data);
+    const updatedDets = flattenObject(data, ".", "dets");
     await incidentService.update(incident.id, updatedDets);
     await delay(250);
   };

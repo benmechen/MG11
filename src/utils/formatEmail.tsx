@@ -7,7 +7,6 @@ export const camelCaseToWords = (s: string) =>
 
 export const formatEmail = (incident: Partial<Incident>, people: Person[]) => {
   const formattedCAD = `${incident.cadNumber}/${incident.date?.replaceAll("-", "")}`;
-  console.log(incident.dets);
   const body = `CAD Number: ${formattedCAD}
 Location: ${incident?.location ?? "Unknown location"}\n\n--------------------------------\n${
     people.length > 0
@@ -31,14 +30,15 @@ ${Object.entries(incident.dets ?? {})
   )
   .join("\n")}
 ${
-  incident?.dara &&
-  "DARA:\n" +
-    Object.entries(daraQuestions)
-      .map(
-        ([key, value]) =>
-          `${value}\n${camelCaseToWords(incident?.dara?.[key]?.rating ?? "N/A").toUpperCase()} ${incident?.dara?.[key]?.comments ? "-" : ""} ${incident?.dara?.[key]?.comments ?? ""}`,
-      )
-      .join("\n\n")
+  incident?.dara
+    ? "DARA:\n" +
+      Object.entries(daraQuestions)
+        .map(
+          ([key, value]) =>
+            `${value}\n${camelCaseToWords(incident?.dara?.[key]?.rating ?? "N/A").toUpperCase()} ${incident?.dara?.[key]?.comments ? "-" : ""} ${incident?.dara?.[key]?.comments ?? ""}`,
+        )
+        .join("\n\n")
+    : ""
 }
 `;
 

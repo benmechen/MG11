@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useRhfAutosaveConfig } from "../../../../components/incidents/dets/useRhfAutosaveConfig";
 import { StatusIndicator } from "../../../../components/incidents/dets/status-indicator";
 import { flattenObject } from "react-hook-form-autosave";
-import { DaraQuestion } from "../../../../components/incidents/dara/dara-question";
+import { FormQuestion } from "../../../../components/incidents/form/form-question";
 import { daraQuestions } from "../../../../utils/daraQuestions";
 
 type DaraField = {
@@ -96,115 +96,115 @@ function RouteComponent() {
         />
         <div className="flex flex-col gap-4">
           <IcTypography variant="h2">DARA</IcTypography>
-          <DaraQuestion
+          <FormQuestion
             name="threatsPeoplePetsProperty"
             label={daraQuestions.threatsPeoplePetsProperty}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="callNamesHumiliateDegrade"
             label={daraQuestions.callNamesHumiliateDegrade}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="controlDailyActivities"
             label={daraQuestions.controlDailyActivities}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="denyAccessToMoney"
             label={daraQuestions.denyAccessToMoney}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="monitorPhoneEmailSocialMedia"
             label={daraQuestions.monitorPhoneEmailSocialMedia}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="followStalkContact"
             label={daraQuestions.followStalkContact}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="feelIsolatedNoSupport"
             label={daraQuestions.feelIsolatedNoSupport}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="physicalViolence"
             label={daraQuestions.physicalViolence}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="strangleChokeSuffocateDrown"
             label={daraQuestions.strangleChokeSuffocateDrown}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="useThreatenUseWeapons"
             label={daraQuestions.useThreatenUseWeapons}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="threatenAttemptSuicide"
             label={daraQuestions.threatenAttemptSuicide}
             options={howOftenOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="recentlySeparated"
             label={daraQuestions.recentlySeparated}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="inDanger"
             label={daraQuestions.inDanger}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="abuseWorsening"
             label={daraQuestions.abuseWorsening}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="threatenedToKill"
             label={daraQuestions.threatenedToKill}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="hurtChildren"
             label={daraQuestions.hurtChildren}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="useChildContactArrangements"
             label={daraQuestions.useChildContactArrangements}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="pregnant"
             label={daraQuestions.pregnant}
             options={yesNoOptions}
             flush={flush}
           />
-          <DaraQuestion
+          <FormQuestion
             name="futureInjuryLikelihood"
             label={daraQuestions.futureInjuryLikelihood}
             options={[

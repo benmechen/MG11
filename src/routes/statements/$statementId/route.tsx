@@ -2,6 +2,10 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { INewPersonForm } from "../../../components/incidents/new/new-person-modal";
 import { isValidId } from "../../../utils/isValidId";
+import Handlebars from "handlebars";
+import { useMemo } from "react";
+import Incident from "../../../db/models/incident";
+import { templateStatement } from "../../../utils/statementTemplate";
 
 export interface INewDocumentFields {
   witness: INewPersonForm & {
@@ -26,15 +30,26 @@ export const Route = createFileRoute("/statements/$statementId")({
       statement.templateId!,
     );
 
+    let incident: Incident | undefined;
+    if (statement.incidentId)
+      incident = await context.incidentService.findById(statement.incidentId!);
+
     return {
       template,
       statement,
+      incident,
     };
   },
 });
 
 function RouteComponent() {
-  const { template, statement } = Route.useLoaderData();
+  const { template, statement, incident } = Route.useLoaderData();
+  const { incidentService } = Route.useRouteContext();
+
+  const statementTemplate = useMemo(
+    () => Handlebars.compile(statement?.statement || template?.statement || ""),
+    [statement, template],
+  );
 
   const methods = useForm<INewDocumentFields>({
     defaultValues: {
@@ -48,7 +63,11 @@ function RouteComponent() {
             : undefined,
         over18: !statement?.person?.dateOfBirth,
       },
-      statement: statement?.statement || template?.statement || "",
+      statement: templateStatement(
+        statementTemplate,
+        incidentService,
+        incident,
+      ),
       incident: statement?.incident
         ? `${statement.incident.cadNumber}/${statement.incident.date}`
         : undefined,

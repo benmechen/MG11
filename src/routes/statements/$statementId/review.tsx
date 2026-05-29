@@ -23,6 +23,15 @@ import { INewDocumentFields } from "./route";
 
 export const Route = createFileRoute("/statements/$statementId/review")({
   component: RouteComponent,
+  loader: async ({ context, params }) => {
+    if (!isValidId(params.statementId)) return {};
+
+    const statement = await context.statementService.getById(
+      params.statementId!,
+    );
+
+    return { statement };
+  },
 });
 
 function RouteComponent() {
@@ -30,6 +39,7 @@ function RouteComponent() {
   const navigate = useNavigate({ from: "/statements/$statementId/review" });
   const { watch, getValues } = useFormContext<INewDocumentFields>();
   const { statementId } = Route.useParams();
+  const { statement: statementData } = Route.useLoaderData();
 
   const forenames = watch("witness.firstName");
   const surname = watch("witness.lastName");
@@ -104,7 +114,7 @@ function RouteComponent() {
       }}
       metadata={{
         createdAt: new Date(),
-        signatureUrl: trimmedDataURL,
+        signatureUrl: trimmedDataURL ?? statementData?.signature,
       }}
       statement={statement}
     />

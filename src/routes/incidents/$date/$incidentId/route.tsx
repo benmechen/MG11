@@ -239,7 +239,7 @@ function RouteComponent() {
               })
             }
           />
-          {/* <IcNavigationItem
+          <IcNavigationItem
             slot="tabs"
             label="124H"
             href={`/incidents/${incident?.date}/${incident?.cadNumber}/124h`}
@@ -248,7 +248,7 @@ function RouteComponent() {
                 to: "/incidents/$date/$incidentId/124h",
               })
             }
-          /> */}
+          />
         </IcPageHeader>
         <Outlet />
       </div>
