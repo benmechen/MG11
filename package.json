@@ -15,6 +15,10 @@
     "@react-pdf/renderer": "^4.1.6",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-router": "^1.139.14",
+    "@tiptap/pm": "^3.27.1",
+    "@tiptap/react": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1",
+    "@tiptap/suggestion": "^3.27.1",
     "@ukic/canary-react": "^3.0.0-canary.31",
     "@ukic/fonts": "^3.2.5",
     "@ukic/react": "^3.15.0",
@@ -27,8 +31,10 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-hook-form-autosave": "^3.3.1",
+    "react-pdf-html": "^2.1.5",
     "react-signature-canvas": "^1.0.7",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "use-editable": "^2.3.3"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.92.3",

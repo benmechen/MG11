@@ -10,7 +10,7 @@ import { isValidId } from "../../../utils/isValidId";
 import { useAppContext } from "../../../components/app-context";
 import { useRhfAutosaveConfig } from "../../../components/incidents/dets/useRhfAutosaveConfig";
 import { StatusIndicator } from "../../../components/incidents/dets/status-indicator";
-import { Textbox } from "../../../components/incidents/dets/textbox";
+import { Editor } from "../../../components/statements/new/editor";
 
 export const Route = createFileRoute("/statements/$statementId/statement")({
   component: RouteComponent,
@@ -22,7 +22,7 @@ function RouteComponent() {
   const navigate = useNavigate({ from: "/statements/$statementId/statement" });
   const form = useFormContext<INewDocumentFields>();
 
-  const { register, getValues } = form;
+  const { getValues } = form;
 
   const delay = (durationMs: number) => {
     return new Promise((resolve) => setTimeout(resolve, durationMs));
@@ -66,14 +66,15 @@ function RouteComponent() {
         hasPendingChanges={hasPendingChanges}
       />
       <FormSectionContainer>
-        <Textbox
+        {/* <Textbox
           label="Statement"
           rows={40}
           // resize
           // fullWidth
           // spellcheck
           {...register("statement")}
-        />
+        /> */}
+        <Editor name="statement" />
       </FormSectionContainer>
     </div>
   );

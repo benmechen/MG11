@@ -1,4 +1,5 @@
 import { Page, Text, View, Document } from "@react-pdf/renderer";
+import Html from "react-pdf-html";
 import { Header } from "./header";
 import { renderAge } from "./utils";
 import { Signature } from "./signature";
@@ -191,7 +192,17 @@ export const RenderedDocument = ({
           paddingVertical: "12pt",
         }}
       >
-        <Text>{statement}</Text>
+        <Html
+          collapse={false}
+          style={{ fontSize: 10 }}
+          stylesheet={{
+            p: {
+              margin: 2,
+            },
+          }}
+        >
+          {statement}
+        </Html>
       </View>
       <View
         fixed

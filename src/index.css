@@ -23,6 +23,28 @@
   --color-ic-architectural-40: var(--ic-architectural-40);
   --color-ic-architectural-20: var(--ic-architectural-20);
   --color-ic-architectural-white: var(--ic-architectural-white);
+
+  --color-ic-blue-1800: var(--ic-blue-1800);
+  --color-ic-blue-1700: var(--ic-blue-1700);
+  --color-ic-blue-1600: var(--ic-blue-1600);
+  --color-ic-blue-1500: var(--ic-blue-1500);
+  --color-ic-blue-1400: var(--ic-blue-1400);
+  --color-ic-blue-1300: var(--ic-blue-1300);
+  --color-ic-blue-1200: var(--ic-blue-1200);
+  --color-ic-blue-1100: var(--ic-blue-1100);
+  --color-ic-blue-1000: var(--ic-blue-1000);
+  --color-ic-blue-900: var(--ic-blue-900);
+  --color-ic-blue-800: var(--ic-blue-800);
+  --color-ic-blue-700: var(--ic-blue-700);
+  --color-ic-blue-600: var(--ic-blue-600);
+  --color-ic-blue-500: var(--ic-blue-500);
+  --color-ic-blue-400: var(--ic-blue-400);
+  --color-ic-blue-300: var(--ic-blue-300);
+  --color-ic-blue-200: var(--ic-blue-200);
+  --color-ic-blue-100: var(--ic-blue-100);
+  --color-ic-blue-50: var(--ic-blue-50);
+  --color-ic-blue-0: var(--ic-blue-0);
+
   --color-ic-action-default: var(--ic-action-default);
   --color-button-default-background-hover: var(
     --ic-button-secondary-background-hover-active
@@ -37,4 +59,43 @@ html,
 body {
   margin: 0;
   min-height: 100vh;
+}
+
+.ProseMirror {
+  @apply min-h-[600px] h-full px-2 caret-ic-text-field-typing-cursor text-ic-text-field-text rounded-sm border border-ic-architectural-500;
+}
+
+.tiptap {
+  p {
+    @apply my-0 first:mt-0 last:mb-0 text-base leading-relaxed;
+  }
+}
+
+.variable {
+  display: inline-block;
+
+  padding: 2px 8px;
+
+  border-radius: 6px;
+
+  background: #eef5ff;
+
+  border: 1px solid #4f8df7;
+
+  color: #1756d6;
+
+  cursor: pointer;
+
+  transition: 0.15s;
+}
+
+.variable:hover {
+  background: #dbeaff;
+}
+
+.variable input {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: white;
 }

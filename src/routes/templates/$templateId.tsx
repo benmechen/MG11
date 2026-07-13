@@ -158,7 +158,7 @@ function RouteComponent() {
               className="flex justify-between items-center cursor-pointer"
               onClick={() => setShowVariables((v) => !v)}
             >
-              <IcTypography variant="h4">Variables</IcTypography>
+              <IcTypography variant="h4">Default Variables</IcTypography>
               <SlottedSVG
                 viewBox="0 0 24 24"
                 path={mdiChevronDown}
@@ -168,6 +168,11 @@ function RouteComponent() {
             <div
               className={`mt-4 flex flex-col gap-2 ${showVariables ? "" : "hidden"}`}
             >
+              <IcTypography variant="body" className="mb-2">
+                These variables can be used in your template and will be
+                replaced with the corresponding values when generating a
+                statement.
+              </IcTypography>
               <div className="flex">
                 <IcTypography variant="code-small">{"{{ cad }}"}</IcTypography>
                 <IcTypography variant="body" className="ml-2">
