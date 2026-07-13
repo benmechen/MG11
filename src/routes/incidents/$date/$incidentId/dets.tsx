@@ -12,6 +12,7 @@ import { DomesticForm } from "../../../../components/incidents/dets/domestic-for
 import { FormSectionContainer } from "../../../../components/statements/new/form-section-container";
 import { useAppContext } from "../../../../components/app-context";
 import { flattenObject } from "react-hook-form-autosave";
+import { format } from "date-fns";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId/dets")({
   component: RouteComponent,
@@ -66,6 +67,11 @@ function RouteComponent() {
     ? `${incident.cadNumber.toString()}/${incident.date.replaceAll("-", "")}`
     : "";
 
+  const formattedDate = format(
+    incident?.date || new Date(),
+    "EEEE do MMMM yyyy",
+  ).toUpperCase();
+
   const delay = (durationMs: number) => {
     return new Promise((resolve) => setTimeout(resolve, durationMs));
   };
@@ -108,6 +114,7 @@ function RouteComponent() {
             id={incident?.id}
             cad={formattedCAD}
             location={incident?.location}
+            date={formattedDate}
             dets={incident?.dets}
             onUpdate={updateDets}
           />
@@ -117,6 +124,7 @@ function RouteComponent() {
             id={incident?.id}
             cad={formattedCAD}
             location={incident?.location}
+            date={formattedDate}
             dets={incident?.dets}
             onUpdate={updateDets}
           />
@@ -126,6 +134,7 @@ function RouteComponent() {
             id={incident?.id}
             cad={formattedCAD}
             location={incident?.location}
+            date={formattedDate}
             dets={incident?.dets}
             onUpdate={updateDets}
           />
