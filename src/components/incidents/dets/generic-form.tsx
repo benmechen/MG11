@@ -2,6 +2,11 @@ import { useForm } from "react-hook-form";
 import { Textbox } from "./textbox";
 import { StatusIndicator } from "./status-indicator";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
+import { Thrive } from "./thrive";
+import { Safeguarding } from "./safeguarding";
+import { IcButton, SlottedSVG } from "@ukic/react";
+import { mdiPlus } from "@mdi/js";
+import { useState } from "react";
 
 export interface GenericFormFields extends Record<string, string | undefined> {
   generalActions?: string;
@@ -12,12 +17,16 @@ export interface GenericFormFields extends Record<string, string | undefined> {
   otherActions?: string;
   solvability?: string;
   thrive?: string;
+  safeguardingDetails?: string;
+  safeguardingActions?: string;
+  safeguardingDescription?: string;
 }
 
 interface IGenericFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
   location?: string;
+  date?: string;
   dets?: { [key: string]: string };
   onUpdate: (data: T) => Promise<void>;
 }
@@ -25,9 +34,17 @@ interface IGenericFormProps<T extends Record<string, string | undefined>> {
 export const GenericForm = ({
   cad,
   location,
+  date,
   dets,
   onUpdate,
 }: IGenericFormProps<GenericFormFields>) => {
+  const [showSafeguarding, setShowSafeguarding] = useState<boolean>(
+    false ||
+      !!dets?.["safeguardingDetails"] ||
+      !!dets?.["safeguardingActions"] ||
+      !!dets?.["safeguardingDescription"],
+  );
+
   const form = useForm<GenericFormFields>({
     defaultValues: {
       generalActions:
@@ -42,6 +59,8 @@ export const GenericForm = ({
 - Arresting Officer: 
 - Time of arrest: 
 - Relevant time: 
+
+On ${date ?? ""} at 00:00 hours inside/outside ${location?.toUpperCase() ?? ""}...
 
 - Provide a narrative of what happened, when, where, who was involved and why.
 - Take care to only record sensitive personal data on relevant person cards.
@@ -98,6 +117,20 @@ export const GenericForm = ({
 - VULNERABILITY - Vulnerability is defined for the purpose of incident management as “a person is vulnerable if as a result of their situation or circumstances they are unable to take care or protect themselves or others from harm or exploitation.
 - ENGAGEMENT - Engagement is where organisations and individuals build positive relationships for the benefit of all parties.
 - PREVENTION and INTERVENTION - Prevention and intervention is identifying opportunities to prevent further incidents occurring or worsening of threat, risk and harm and allocating the most appropriate resources (Police or Partnership) to intervene before further, more serious police intervention is required.`,
+      safeguardingDetails:
+        dets?.["safeguardingDetails"] ||
+        ` Please provide full detail of specific concerns`,
+      safeguardingActions:
+        dets?.["safeguardingActions"] ||
+        `Please describe safeguarding actions taken`,
+      safeguardingDescription:
+        dets?.["safeguardingDescription"] ||
+        `***VAF***
+Appearance: 
+Behaviour: 
+Communication: 
+Danger: 
+Environment: `,
     },
   });
 
@@ -168,13 +201,21 @@ export const GenericForm = ({
         rows={6}
         {...register("solvability")}
       />
-      <Textbox
-        label="THRIVE+"
-        spellCheck
-        autoCapitalize="on"
-        rows={15}
-        {...register("thrive")}
-      />
+      <Thrive register={register} getValues={form.getValues} />
+      {showSafeguarding ? (
+        <Safeguarding register={register} getValues={form.getValues} />
+      ) : (
+        <IcButton variant="tertiary" onClick={() => setShowSafeguarding(true)}>
+          <SlottedSVG
+            path={mdiPlus}
+            slot="left-icon"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          />
+          Add safeguarding triage
+        </IcButton>
+      )}
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
 import { StatusIndicator } from "./status-indicator";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
+import { Thrive } from "./thrive";
+import { Safeguarding } from "./safeguarding";
 
 interface DomesticFormFields extends Record<string, string | undefined> {
   generalActions?: string;
@@ -21,6 +22,7 @@ interface DomesticFormFields extends Record<string, string | undefined> {
 interface IDomesticFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
+  date?: string;
   location?: string;
   dets?: { [key: string]: string };
   onUpdate: (data: T) => Promise<void>;
@@ -28,6 +30,7 @@ interface IDomesticFormProps<T extends Record<string, string | undefined>> {
 
 export const DomesticForm = ({
   cad,
+  date,
   location,
   dets,
   onUpdate,
@@ -46,6 +49,8 @@ export const DomesticForm = ({
 - Arresting Officer: 
 - Time of arrest: 
 - Relevant time: 
+
+On ${date ?? ""} at 00:00 hours inside/outside ${location?.toUpperCase() ?? ""}...
 
 - Provide a narrative of what happened, when, where, who was involved and why.
 - Take care to only record sensitive personal data on relevant person cards.
@@ -107,6 +112,20 @@ export const DomesticForm = ({
 - VULNERABILITY - Vulnerability is defined for the purpose of incident management as “a person is vulnerable if as a result of their situation or circumstances they are unable to take care or protect themselves or others from harm or exploitation.
 - ENGAGEMENT - Engagement is where organisations and individuals build positive relationships for the benefit of all parties.
 - PREVENTION and INTERVENTION - Prevention and intervention is identifying opportunities to prevent further incidents occurring or worsening of threat, risk and harm and allocating the most appropriate resources (Police or Partnership) to intervene before further, more serious police intervention is required.`,
+      safeguardingDetails:
+        dets?.["safeguardingDetails"] ||
+        ` Please provide full detail of specific concerns`,
+      safeguardingActions:
+        dets?.["safeguardingActions"] ||
+        `Please describe safeguarding actions taken`,
+      safeguardingDescription:
+        dets?.["safeguardingDescription"] ||
+        `***VAF***
+Appearance: 
+Behaviour: 
+Communication: 
+Danger: 
+Environment: `,
     },
   });
 
@@ -176,40 +195,8 @@ export const DomesticForm = ({
         rows={8}
         {...register("checks")}
       />
-      <Textbox
-        label="THRIVE+"
-        spellCheck
-        autoCapitalize="on"
-        rows={15}
-        {...register("thrive")}
-      />
-      <IcTypography variant="h3" className="my-2">
-        Safeguarding Triage
-      </IcTypography>
-      <Textbox
-        label="Concerns"
-        helperText="Describe in full detail what are the specific concerns for the individual"
-        spellCheck
-        autoCapitalize="on"
-        rows={6}
-        {...register("safeguardingDetails")}
-      />
-      <Textbox
-        label="Actions Taken"
-        helperText="Describe in full detail what if any safeguarding actions have taken place"
-        spellCheck
-        autoCapitalize="on"
-        rows={6}
-        {...register("safeguardingActions")}
-      />
-      <Textbox
-        label="Detail"
-        helperText="Describe in full detail what areas of concerns you are highlighting to the local authority"
-        spellCheck
-        autoCapitalize="on"
-        rows={7}
-        {...register("safeguardingDescription")}
-      />
+      <Thrive register={register} getValues={form.getValues} />
+      <Safeguarding register={register} getValues={form.getValues} />
     </div>
   );
 };

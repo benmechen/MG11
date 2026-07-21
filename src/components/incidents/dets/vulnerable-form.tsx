@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
-import { IcTypography } from "@ukic/react";
 import { Textbox } from "./textbox";
 import { useRhfAutosaveConfig } from "./useRhfAutosaveConfig";
 import { StatusIndicator } from "./status-indicator";
+import { Thrive } from "./thrive";
+import { Safeguarding } from "./safeguarding";
 
 interface VulnerableFormFields extends Record<string, string | undefined> {
   generalActions?: string;
@@ -15,6 +16,7 @@ interface VulnerableFormFields extends Record<string, string | undefined> {
 interface IVulnerableFormProps<T extends Record<string, string | undefined>> {
   id: number;
   cad?: string;
+  date?: string;
   location?: string;
   dets?: { [key: string]: string };
   onUpdate: (data: T) => Promise<void>;
@@ -22,6 +24,7 @@ interface IVulnerableFormProps<T extends Record<string, string | undefined>> {
 
 export const VulnerableForm = ({
   cad,
+  date,
   location,
   dets,
   onUpdate,
@@ -34,6 +37,8 @@ export const VulnerableForm = ({
 - Call sign: 
 - Attending Officers: 
 - Location: ${location ?? ""}
+
+On ${date ?? ""} at 00:00 hours inside/outside ${location?.toUpperCase() ?? ""}...
 
 - Provide a narrative of what happened, when, where, who was involved and why.
 - Take care to only record sensitive personal data on relevant Person Cards.
@@ -85,40 +90,8 @@ Environment: `,
         rows={16}
         {...register("generalActions")}
       />
-      <Textbox
-        label="THRIVE+"
-        spellCheck
-        autoCapitalize="on"
-        rows={15}
-        {...register("thrive")}
-      />
-      <IcTypography variant="h3" className="my-2">
-        Safeguarding Triage
-      </IcTypography>
-      <Textbox
-        label="Concerns"
-        helperText="Describe in full detail what are the specific concerns for the individual"
-        spellCheck
-        autoCapitalize="on"
-        rows={6}
-        {...register("safeguardingDetails")}
-      />
-      <Textbox
-        label="Actions Taken"
-        helperText="Describe in full detail what if any safeguarding actions have taken place"
-        spellCheck
-        autoCapitalize="on"
-        rows={6}
-        {...register("safeguardingActions")}
-      />
-      <Textbox
-        label="Detail"
-        helperText="Describe in full detail what areas of concerns you are highlighting to the local authority"
-        spellCheck
-        autoCapitalize="on"
-        rows={7}
-        {...register("safeguardingDescription")}
-      />
+      <Thrive register={register} getValues={form.getValues} />
+      <Safeguarding register={register} getValues={form.getValues} />
     </div>
   );
 };
