@@ -18,6 +18,7 @@ export const VariableView = ({
           autoFocus
           type={fieldType === "date" ? "date" : "text"}
           defaultValue={value}
+          className="bg-ic-blue-900 hover:bg-ic-blue-1000 text-ic-architectural-white px-1 py-0.5 rounded-sm focus:outline-0"
           onBlur={(e) => {
             updateAttributes({
               value: e.target.value,
@@ -35,8 +36,13 @@ export const VariableView = ({
       as="span"
       className="bg-ic-blue-900 hover:bg-ic-blue-1000 text-ic-architectural-white px-1 py-0.5 rounded-sm"
       onClick={() => setEditing(true)}
+      // contentEditable={true} // Prevents the span from being editable
+      // onBlur={(e: any) => {
+      //   updateAttributes({
+      //     value: e.target.value,
+      //   });
+      // }}
     >
-      Test content
       {value}
     </NodeViewWrapper>
   );
