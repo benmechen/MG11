@@ -7,7 +7,7 @@ import { FormSectionContainer } from "../../../components/statements/new/form-se
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { RenderedDocument } from "../../../components/statements/rendered-document";
 import { useFormContext } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import {
   IcButton,
@@ -20,6 +20,31 @@ import { mdiDownload } from "@mdi/js";
 import { isValidId } from "../../../utils/isValidId";
 import { useAppContext } from "../../../components/app-context";
 import { INewDocumentFields } from "./route";
+
+export const generateDocument = (
+  { witness, statement }: INewDocumentFields,
+  signatureUrl?: string,
+) => {
+  console.log("Generate Doc:", signatureUrl);
+  return (
+    <RenderedDocument
+      witness={{
+        forenames: witness.firstName ?? "",
+        surname: witness.lastName ?? "",
+        dateOfBirth: witness.dateOfBirth
+          ? new Date(witness.dateOfBirth)
+          : new Date(),
+        over18: witness.over18,
+        occupation: witness.occupation || "N/A",
+      }}
+      metadata={{
+        createdAt: new Date(),
+        signatureUrl,
+      }}
+      statement={statement}
+    />
+  );
+};
 
 export const Route = createFileRoute("/statements/$statementId/review")({
   component: RouteComponent,
@@ -41,11 +66,9 @@ function RouteComponent() {
   const { statementId } = Route.useParams();
   const { statement: statementData } = Route.useLoaderData();
 
+  const witness = watch("witness");
   const forenames = watch("witness.firstName");
   const surname = watch("witness.lastName");
-  const dateOfBirth = watch("witness.dateOfBirth");
-  const over18 = watch("witness.over18");
-  const occupation = watch("witness.occupation");
   const statement = watch("statement");
 
   const sigCanvas = useRef<SignatureCanvas>(null);
@@ -103,21 +126,13 @@ function RouteComponent() {
     });
   };
 
-  const document = (
-    <RenderedDocument
-      witness={{
-        forenames: forenames ?? "",
-        surname: surname ?? "",
-        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : new Date(),
-        over18: over18,
-        occupation: occupation || "N/A",
-      }}
-      metadata={{
-        createdAt: new Date(),
-        signatureUrl: trimmedDataURL ?? statementData?.signature,
-      }}
-      statement={statement}
-    />
+  const document = useMemo(
+    () =>
+      generateDocument(
+        { witness, statement },
+        trimmedDataURL ?? statementData?.signature,
+      ),
+    [witness, statement, trimmedDataURL, statementData?.signature],
   );
 
   return (

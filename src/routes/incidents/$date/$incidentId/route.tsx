@@ -7,20 +7,10 @@ import {
   SlottedSVG,
   IcLoadingIndicator,
   IcNavigationItem,
-  IcMenuItem,
-  IcPopoverMenu,
   IcTypography,
   IcTextField,
 } from "@ukic/react";
-import {
-  mdiCheck,
-  mdiContentCopy,
-  mdiEmail,
-  mdiExportVariant,
-  mdiLinkVariant,
-  mdiPencil,
-  mdiText,
-} from "@mdi/js";
+import { mdiCheck, mdiContentCopy, mdiDotsVertical, mdiPencil } from "@mdi/js";
 import { useRef, useState } from "react";
 import { DeleteIncidentModal } from "../../../../components/incidents/new/delete-incident-modal";
 import { DeleteButton } from "../../../../components/delete-button";
@@ -28,6 +18,7 @@ import { formatEmail } from "../../../../utils/formatEmail";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useAppContext } from "../../../../components/app-context";
 import { ShareIncidentModal } from "../../../../components/incidents/share-incident-modal";
+import { IncidentOptionsDropdown } from "../../../../components/incidents/new/incident-options-dropdown";
 
 export const Route = createFileRoute("/incidents/$date/$incidentId")({
   component: RouteComponent,
@@ -47,7 +38,7 @@ function RouteComponent() {
   const navigate = Route.useNavigate();
   const [showDeleteIncident, setShowDeleteIncident] = useState(false);
   const [showShareIncident, setShowShareIncident] = useState(false);
-  const [exportPopoverOpen, setExportPopoverOpen] = useState<boolean>(false);
+  const [optionsPopoverOpen, setOptionsPopoverOpen] = useState<boolean>(false);
   const [isEditingLocation, setEditingLocation] = useState(false);
   const [location, setLocation] = useState(incident?.location);
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
@@ -77,8 +68,8 @@ function RouteComponent() {
     }
   };
 
-  const handlePopoverToggled = () => setExportPopoverOpen((value) => !value);
-  const handlePopoverClosed = () => setExportPopoverOpen(false);
+  const handlePopoverToggled = () => setOptionsPopoverOpen((value) => !value);
+  const handlePopoverClosed = () => setOptionsPopoverOpen(false);
 
   const handleLocationUpdate = () => {
     setEditingLocation(false);
@@ -124,22 +115,13 @@ function RouteComponent() {
         open={showShareIncident}
         onClose={() => setShowShareIncident(false)}
       />
-      <IcPopoverMenu
-        anchor="export-button"
-        aria-label="popover"
-        open={exportPopoverOpen}
-        onIcPopoverClosed={handlePopoverClosed}
-      >
-        <IcMenuItem label="Link" onClick={() => setShowShareIncident(true)}>
-          <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiLinkVariant} />
-        </IcMenuItem>
-        <IcMenuItem label="Email" onClick={openEmail}>
-          <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiEmail} />
-        </IcMenuItem>
-        <IcMenuItem label="Plain text" href="export">
-          <SlottedSVG slot="icon" viewBox="0 0 24 24" path={mdiText} />
-        </IcMenuItem>
-      </IcPopoverMenu>
+      <IncidentOptionsDropdown
+        id={incident.id}
+        open={optionsPopoverOpen}
+        onClose={handlePopoverClosed}
+        onEmail={openEmail}
+        onLink={() => setShowShareIncident(true)}
+      />
 
       <div className="min-h-full bg-ic-architectural-40 dark:bg-ic-architectural-700">
         <IcPageHeader heading={`CAD ${formattedCAD}`} aligned="full-width">
@@ -199,13 +181,13 @@ function RouteComponent() {
             variant="secondary"
             onClick={handlePopoverToggled}
           >
-            Export
+            Options
             <SlottedSVG
               slot="right-icon"
               height="24"
               viewBox="0 0 24 24"
               width="24"
-              path={mdiExportVariant}
+              path={mdiDotsVertical}
             />
           </IcButton>
           <DeleteButton onClick={() => setShowDeleteIncident(true)} />

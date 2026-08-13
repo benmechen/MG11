@@ -10,9 +10,19 @@ import {
   IcTextField,
   IcTypography,
 } from "@ukic/react";
+import { isValidId } from "../../../utils/isValidId";
 
 export const Route = createFileRoute("/statements/$statementId/consent")({
   component: RouteComponent,
+  loader: async ({ context, params }) => {
+    if (!isValidId(params.statementId)) return {};
+
+    const statement = await context.statementService.getById(
+      params.statementId!,
+    );
+
+    return { statement };
+  },
 });
 
 function RouteComponent() {

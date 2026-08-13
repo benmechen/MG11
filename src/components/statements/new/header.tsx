@@ -1,4 +1,9 @@
-import { mdiArrowLeft, mdiArrowRight, mdiSignatureFreehand } from "@mdi/js";
+import {
+  mdiArrowLeft,
+  mdiArrowRight,
+  mdiSignatureFreehand,
+  mdiDotsVertical,
+} from "@mdi/js";
 import {
   IcPageHeader,
   IcBreadcrumbGroup,
@@ -11,7 +16,7 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { DeleteStatementModal } from "../delete-statement-modal";
 import { useState } from "react";
-import { DeleteButton } from "../../delete-button";
+import { OptionsDropdown } from "./options-dropdown";
 
 export enum NewDocumentPageHeaderStep {
   Templates = 0,
@@ -36,6 +41,9 @@ export const NewDocumentPageHeader = ({
   const navigate = useNavigate();
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+
+  const handlePopoverToggled = () => setPopoverOpen((value) => !value);
 
   const getStepState = (
     currentStep: NewDocumentPageHeaderStep,
@@ -92,7 +100,19 @@ export const NewDocumentPageHeader = ({
           Back
           <SlottedSVG path={mdiArrowLeft} slot="left-icon" />
         </IcButton>
-        <DeleteButton onClick={() => setDeleteModalOpen(true)} />
+
+        <IcButton
+          slot="actions"
+          variant="tertiary"
+          id="options-button"
+          onClick={handlePopoverToggled}
+          aria-expanded={popoverOpen}
+        >
+          Options
+          <SlottedSVG path={mdiDotsVertical} slot="right-icon" />
+        </IcButton>
+
+        {/* <DeleteButton onClick={() => setDeleteModalOpen(true)} /> */}
         <IcButton slot="actions" variant="primary" onClick={onNext}>
           {step === NewDocumentPageHeaderStep.Complete ? "Sign" : "Next"}
           <SlottedSVG
@@ -104,7 +124,7 @@ export const NewDocumentPageHeader = ({
             slot="right-icon"
           />
         </IcButton>
-        {}
+
         <IcStepper slot="stepper">
           <IcStep
             heading="Template"
@@ -135,6 +155,12 @@ export const NewDocumentPageHeader = ({
           />
         </IcStepper>
       </IcPageHeader>
+      <OptionsDropdown
+        statementId={statementId}
+        open={popoverOpen}
+        onClose={() => setPopoverOpen(false)}
+        onDelete={() => setDeleteModalOpen(true)}
+      />
     </>
   );
 };
