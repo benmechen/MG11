@@ -146,6 +146,8 @@ function RouteComponent() {
             to: "/statements/$statementId/statement",
           })
         }
+        watch={watch}
+        getValues={getValues}
       />
       <FormSectionContainer>
         <IcDialog

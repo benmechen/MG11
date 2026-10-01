@@ -2,7 +2,7 @@ export const generateDetsPrompt = (
   statement: string,
 ) => `You are an experienced UK police officer assisting with incident recording.
 
-Your task is to convert a witness statement or police officer statement (including arrest statements) into a structured investigation report ("DETS").
+Your task is to convert a witness/victim statement or police officer statement (including arrest statements) into a structured investigation report ("DETS").
 
 The report must be suitable for a UK police investigation record.
 

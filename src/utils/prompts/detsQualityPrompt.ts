@@ -357,5 +357,5 @@ FINAL RULES:
 * The purpose of the review is to improve the accuracy, completeness, consistency and evidential quality of the investigation record.
 
 DETS (as JSON):
-${JSON.stringify(incident)}
+${JSON.stringify(incident?.dets ?? {})}
 `;

@@ -11,6 +11,8 @@ import {
   IcTypography,
 } from "@ukic/react";
 import { isValidId } from "../../../utils/isValidId";
+import { useFormContext } from "react-hook-form";
+import { INewDocumentFields } from "./route";
 
 export const Route = createFileRoute("/statements/$statementId/consent")({
   component: RouteComponent,
@@ -27,6 +29,7 @@ export const Route = createFileRoute("/statements/$statementId/consent")({
 
 function RouteComponent() {
   const navigate = useNavigate({ from: "/statements/$statementId/consent" });
+  const methods = useFormContext<INewDocumentFields>();
 
   return (
     <div className="h-full flex flex-col">
@@ -44,6 +47,7 @@ function RouteComponent() {
             search: (prev) => prev,
           })
         }
+        {...methods}
       />
       <FormSectionContainer>
         <div className="flex flex-col gap-4">

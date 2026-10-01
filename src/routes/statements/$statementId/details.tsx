@@ -96,6 +96,7 @@ function RouteComponent() {
             to: "/statements",
           })
         }
+        {...methods}
       />
       <FormProvider {...methods}>
         <FormSectionContainer>

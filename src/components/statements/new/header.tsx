@@ -17,6 +17,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { DeleteStatementModal } from "../delete-statement-modal";
 import { useState } from "react";
 import { OptionsDropdown } from "./options-dropdown";
+import { UseFormWatch, UseFormGetValues } from "react-hook-form";
+import { INewDocumentFields } from "../../../routes/statements/$statementId/route";
 
 export enum NewDocumentPageHeaderStep {
   Templates = 0,
@@ -31,12 +33,16 @@ interface INewDocumentPageHeader {
   step: NewDocumentPageHeaderStep;
   onBack?: () => void;
   onNext: () => void;
+  watch?: UseFormWatch<INewDocumentFields>;
+  getValues?: UseFormGetValues<INewDocumentFields>;
 }
 export const NewDocumentPageHeader = ({
   statementId,
   step,
   onBack,
   onNext,
+  watch,
+  getValues,
 }: INewDocumentPageHeader) => {
   const navigate = useNavigate();
 
@@ -54,6 +60,8 @@ export const NewDocumentPageHeader = ({
       : currentStep > targetStep
         ? "completed"
         : "disabled";
+
+  const showOptionsDropdown = !!(watch && getValues);
 
   return (
     <>
@@ -101,16 +109,18 @@ export const NewDocumentPageHeader = ({
           <SlottedSVG path={mdiArrowLeft} slot="left-icon" />
         </IcButton>
 
-        <IcButton
-          slot="actions"
-          variant="tertiary"
-          id="options-button"
-          onClick={handlePopoverToggled}
-          aria-expanded={popoverOpen}
-        >
-          Options
-          <SlottedSVG path={mdiDotsVertical} slot="right-icon" />
-        </IcButton>
+        {showOptionsDropdown && (
+          <IcButton
+            slot="actions"
+            variant="tertiary"
+            id="options-button"
+            onClick={handlePopoverToggled}
+            aria-expanded={popoverOpen}
+          >
+            Options
+            <SlottedSVG path={mdiDotsVertical} slot="right-icon" />
+          </IcButton>
+        )}
 
         {/* <DeleteButton onClick={() => setDeleteModalOpen(true)} /> */}
         <IcButton slot="actions" variant="primary" onClick={onNext}>
@@ -155,12 +165,16 @@ export const NewDocumentPageHeader = ({
           />
         </IcStepper>
       </IcPageHeader>
-      <OptionsDropdown
-        statementId={statementId}
-        open={popoverOpen}
-        onClose={() => setPopoverOpen(false)}
-        onDelete={() => setDeleteModalOpen(true)}
-      />
+      {showOptionsDropdown && (
+        <OptionsDropdown
+          statementId={statementId}
+          open={popoverOpen}
+          onClose={() => setPopoverOpen(false)}
+          onDelete={() => setDeleteModalOpen(true)}
+          watch={watch}
+          getValues={getValues}
+        />
+      )}
     </>
   );
 };

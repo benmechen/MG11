@@ -8,7 +8,7 @@ import {
   IcToastRegion,
 } from "@ukic/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { UseFormGetValues, UseFormWatch } from "react-hook-form";
 import { INewDocumentFields } from "../../../routes/statements/$statementId/route";
 import { generateStatementQualityPrompt } from "../../../utils/prompts/statementQualityPrompt";
 import { generateDetsPrompt } from "../../../utils/prompts/generateDetsPrompt";
@@ -22,6 +22,8 @@ interface IOptionsDropdownProps {
   statementId?: string;
   onClose: () => void;
   onDelete: () => void;
+  watch: UseFormWatch<INewDocumentFields>;
+  getValues: UseFormGetValues<INewDocumentFields>;
 }
 
 export const OptionsDropdown = ({
@@ -29,6 +31,8 @@ export const OptionsDropdown = ({
   open,
   onClose,
   onDelete,
+  watch,
+  getValues,
 }: IOptionsDropdownProps) => {
   const { statementService } = useAppContext();
   const toastRegionEl = useRef<HTMLIcToastRegionElement | null>(null);
@@ -38,8 +42,6 @@ export const OptionsDropdown = ({
   const [statementData, setStatement] = useState<Partial<Statement> | null>(
     null,
   );
-
-  const { getValues, watch } = useFormContext<INewDocumentFields>();
 
   useEffect(() => {
     const getStatement = async () => {
@@ -52,6 +54,7 @@ export const OptionsDropdown = ({
   }, [statementId, statementService]);
 
   const copyStatement = async () => {
+    if (!getValues) return;
     const statement = getValues("statement");
 
     try {
@@ -65,6 +68,7 @@ export const OptionsDropdown = ({
   const copyAiPrompt = async (
     promptGenerator: (statement: string) => string,
   ) => {
+    if (!getValues) return;
     const statement = getValues("statement");
 
     try {
@@ -85,15 +89,18 @@ export const OptionsDropdown = ({
     }
   };
 
-  const witness = watch("witness");
-  const statement = watch("statement");
+  const witness = watch?.("witness");
+  const statement = watch?.("statement");
 
   const document = useMemo(
-    () => generateDocument({ witness, statement }, statementData?.signature),
+    () =>
+      witness && statement
+        ? generateDocument({ witness, statement }, statementData?.signature)
+        : null,
     [witness, statement, statementData?.signature],
   );
 
-  const [instance] = usePDF({ document });
+  const [instance] = usePDF({ document: document! });
 
   return (
     <>

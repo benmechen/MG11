@@ -60,6 +60,7 @@ function RouteComponent() {
             to: "/statements/$statementId/details",
           })
         }
+        {...form}
       />
       <StatusIndicator
         isSaving={isSaving}

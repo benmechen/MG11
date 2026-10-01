@@ -71,12 +71,6 @@ export const IncidentOptionsDropdown = ({
           >
             <SlottedSVG slot="icon" path={mdiCreation} />
           </IcMenuItem>
-          {/* <IcMenuItem
-            label="Generate dets from statements"
-            // onClick={() => copyAiPrompt(generateDetsPrompt)}
-          >
-            <SlottedSVG slot="icon" path={mdiCreation} />
-          </IcMenuItem> */}
         </IcMenuGroup>
         <IcMenuGroup label="Export">
           <IcMenuItem label="Link" onClick={onLink}>
